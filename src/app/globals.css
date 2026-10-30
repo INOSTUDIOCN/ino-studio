@@ -10,8 +10,8 @@
 
   --glass-bg: rgba(255, 255, 255, 0.55);
   --glass-border: rgba(255, 255, 255, 0.7);
-  --glass-shadow: 0 8px 32px rgba(17, 17, 17, 0.08);
-  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 2px 8px rgba(17, 17, 17, 0.06), 0 16px 40px rgba(17, 17, 17, 0.1);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(17, 17, 17, 0.04);
 
   --ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 180ms;
@@ -39,11 +39,77 @@ body {
 }
 
 .glass-panel {
+  position: relative;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), var(--glass-highlight);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.5) 48%,
+    rgba(255, 255, 255, 0) 66%
+  );
+  background-size: 220% 220%;
+  background-position: 100% 0%;
+  animation: glass-sheen 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glass-sheen {
+  0%,
+  100% {
+    background-position: 120% 0%;
+  }
+  50% {
+    background-position: -20% 100%;
+  }
+}
+
+.glass-panel--tilt {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform var(--duration-base) var(--ease-glass);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.intro-rise {
+  animation: intro-rise var(--duration-slow) var(--ease-glass) both;
+}
+
+.intro-rise-1 {
+  animation-delay: 60ms;
+}
+
+.intro-rise-2 {
+  animation-delay: 220ms;
+}
+
+.intro-rise-3 {
+  animation-delay: 360ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
