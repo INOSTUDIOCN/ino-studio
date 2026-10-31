@@ -43,8 +43,8 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), var(--glass-highlight);
-  backdrop-filter: blur(22px) saturate(170%);
   -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
   overflow: hidden;
   isolation: isolate;
 }
@@ -123,8 +123,7 @@ body {
   cursor: text !important;
 }
 
-.custom-cursor-dot-wrap,
-.custom-cursor-ring-wrap {
+.custom-cursor-wrap {
   position: fixed;
   top: 0;
   left: 0;
@@ -135,68 +134,41 @@ body {
 }
 
 .custom-cursor-dot {
-  width: 7px;
-  height: 7px;
-  margin: -3.5px 0 0 -3.5px;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
   border-radius: 999px;
   background: var(--color-ink);
-  transition:
-    transform var(--duration-fast) var(--ease-glass),
-    background var(--duration-fast) var(--ease-glass);
+  transition: background var(--duration-fast) var(--ease-glass);
 }
 
-.custom-cursor-ring {
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
+.custom-cursor-wrap[data-tone="dark"] .custom-cursor-dot {
+  background: var(--color-paper);
+}
+
+.custom-cursor-wrap[data-state="hover"] .custom-cursor-dot {
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
   border-radius: 999px;
-  border: 1px solid rgba(18, 18, 18, 0.35);
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(18, 18, 18, 0.55);
+  transform: none !important;
   transition:
     width var(--duration-base) var(--ease-glass),
     height var(--duration-base) var(--ease-glass),
     margin var(--duration-base) var(--ease-glass),
     background var(--duration-base) var(--ease-glass),
-    border-color var(--duration-base) var(--ease-glass),
-    transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-color var(--duration-base) var(--ease-glass);
 }
 
-.custom-cursor-dot-wrap[data-state="hover"] .custom-cursor-dot {
-  transform: scale(0.15);
+.custom-cursor-wrap[data-tone="dark"][data-state="hover"] .custom-cursor-dot {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.78);
 }
 
-.custom-cursor-ring-wrap[data-state="hover"] .custom-cursor-ring {
-  width: 60px;
-  height: 60px;
-  margin: -30px 0 0 -30px;
-  background: rgba(18, 18, 18, 0.07);
-  border-color: rgba(18, 18, 18, 0.55);
-}
-
-.custom-cursor-ring-wrap[data-tone="dark"] .custom-cursor-ring {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.55);
-}
-
-.custom-cursor-ring-wrap[data-tone="dark"][data-state="hover"] .custom-cursor-ring {
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.8);
-}
-
-.custom-cursor-dot-wrap[data-tone="dark"] .custom-cursor-dot {
-  background: var(--color-paper);
-}
-
-.custom-cursor-dot-wrap[data-state="text"],
-.custom-cursor-ring-wrap[data-state="text"] {
-  opacity: 0;
-}
-
-.custom-cursor-ring-wrap[data-pressed="true"] .custom-cursor-ring {
-  transform: scale(0.72) !important;
-  transition: transform 110ms ease-out !important;
+.custom-cursor-wrap[data-state="text"] {
+  opacity: 0 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
