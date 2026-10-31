@@ -24,8 +24,8 @@ type LanguageTransitionContextValue = {
 const LanguageTransitionContext =
   createContext<LanguageTransitionContextValue | null>(null);
 
-const COVER_MS = 620;
-const REVEAL_MS = 460;
+const COVER_MS = 680;
+const REVEAL_MS = 580;
 const REDUCED_MS = 140;
 
 function wait(ms: number) {

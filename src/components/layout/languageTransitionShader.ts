@@ -49,18 +49,19 @@ export const fragment = /* glsl */ `
     vec2 origin = uOrigin;
     origin.x *= aspect;
 
-    float grow = pow(clamp(uProgress, 0.0, 1.0), 0.72);
-    float maxReach = 1.9;
+    float grow = pow(clamp(uProgress, 0.0, 1.0), 0.6);
+    float breathe = 1.0 + sin(uTime * 0.9) * 0.025 * grow;
+    float maxReach = 1.9 * breathe;
     float r0 = grow * maxReach;
 
-    vec2 o1 = origin + vec2(cos(uTime * 0.25) * 0.14, sin(uTime * 0.22) * 0.12) * grow;
-    vec2 o2 = origin + vec2(cos(uTime * 0.3 + 2.1) * 0.2, sin(uTime * 0.27 + 2.1) * 0.16) * grow;
+    vec2 o1 = origin + vec2(cos(uTime * 0.33) * 0.17, sin(uTime * 0.27) * 0.15) * grow;
+    vec2 o2 = origin + vec2(cos(uTime * 0.41 + 2.1) * 0.24, sin(uTime * 0.35 + 2.1) * 0.2) * grow;
 
     float d1 = sdCircle(p, origin, r0);
     float d2 = sdCircle(p, o1, r0 * 0.6);
     float d3 = sdCircle(p, o2, r0 * 0.42);
 
-    float k = 0.22;
+    float k = 0.3;
     float d = smin(smin(d1, d2, k), d3, k);
 
     float e = 0.0025;

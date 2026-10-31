@@ -14,6 +14,8 @@
   --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(17, 17, 17, 0.04);
 
   --ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-liquid: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-liquid-out: cubic-bezier(0.3, 1.2, 0.3, 1);
   --duration-fast: 180ms;
   --duration-base: 320ms;
   --duration-slow: 600ms;
@@ -124,7 +126,7 @@ body {
   background: linear-gradient(180deg, var(--color-paper) 0%, var(--color-mist) 100%);
   clip-path: circle(0% at var(--origin-x, 50%) var(--origin-y, 50%));
   opacity: 1;
-  transition: clip-path var(--duration-slow) var(--ease-glass);
+  transition: clip-path 680ms var(--ease-liquid);
 }
 
 .lang-transition-overlay[data-phase="covering"],
@@ -138,8 +140,8 @@ body {
 
 .lang-transition-overlay[data-phase="revealing"] {
   transition:
-    clip-path var(--duration-slow) var(--ease-glass),
-    opacity var(--duration-base) var(--ease-glass) var(--duration-fast);
+    clip-path 680ms var(--ease-liquid),
+    opacity 540ms var(--ease-liquid) 40ms;
   opacity: 0;
 }
 
@@ -158,17 +160,19 @@ body {
   width: 150px;
   height: auto;
   opacity: 0;
-  transform: scale(0.88);
+  transform: scale(0.9);
   filter: drop-shadow(0 6px 20px rgba(17, 17, 17, 0.1));
   transition:
-    opacity 260ms var(--ease-glass),
-    transform 260ms var(--ease-glass);
+    opacity 320ms var(--ease-liquid),
+    transform 320ms var(--ease-liquid);
 }
 
 .lang-transition-overlay[data-phase="covered"] .lang-transition-mark {
   opacity: 1;
   transform: scale(1);
-  transition-delay: 90ms;
+  transition:
+    opacity 360ms var(--ease-liquid-out) 70ms,
+    transform 360ms var(--ease-liquid-out) 70ms;
 }
 
 .custom-cursor-active,
