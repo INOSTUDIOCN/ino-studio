@@ -39,7 +39,7 @@ export const fragment = /* glsl */ `
     float d2 = sdCircle(p, b, uBlobB.z * grow);
     float d3 = sdCircle(p, c, uBlobC.z * grow);
 
-    float k = 0.14;
+    float k = 0.05;
     return smin(smin(d1, d2, k), d3, k);
   }
 
@@ -72,14 +72,14 @@ export const fragment = /* glsl */ `
 
     float inside = smoothstep(0.004, -0.004, d);
 
-    float refractStrength = 0.14;
-    float refractFalloff = smoothstep(0.0, -0.16, d);
+    float refractStrength = 0.06;
+    float refractFalloff = smoothstep(0.0, -0.06, d);
     vec2 refractedUv = uv - normal * refractStrength * refractFalloff;
     vec3 refractedBg = bgGradient(refractedUv);
 
     vec3 glass = mix(refractedBg, vec3(1.0), 0.22);
 
-    float rim = smoothstep(0.045, 0.0, abs(d));
+    float rim = smoothstep(0.018, 0.0, abs(d));
     vec2 lightDir = normalize(vec2(-0.6, 0.8));
     float facing = clamp(dot(normal, lightDir), 0.0, 1.0);
     float sparkle = 0.5 + 0.5 * sin(uTime * 0.6);
@@ -88,12 +88,13 @@ export const fragment = /* glsl */ `
     float shade = clamp(-dot(normal, lightDir), 0.0, 1.0);
     glass -= rim * shade * 0.12;
 
-    vec2 specCenter = vec2(0.37, 0.64) * vec2(aspect, 1.0);
-    float spec = smoothstep(0.22, -0.02, length((p - specCenter)));
+    vec2 blobACenter = uBlobA.xy * vec2(aspect, 1.0);
+    vec2 specCenter = blobACenter + lightDir * uBlobA.z * 0.4;
+    float spec = smoothstep(uBlobA.z * 0.85, uBlobA.z * -0.1, length(p - specCenter));
     glass += spec * 0.22 * inside;
 
-    float shadowD = scene(p - vec2(0.0, 0.05), aspect, uIntro);
-    float shadow = smoothstep(0.0, -0.08, shadowD) * (1.0 - inside) * 0.08;
+    float shadowD = scene(p - vec2(0.0, 0.018), aspect, uIntro);
+    float shadow = smoothstep(0.0, -0.03, shadowD) * (1.0 - inside) * 0.08;
     bg = mix(bg, bg * 0.9, shadow);
 
     vec3 color = mix(bg, glass, inside);

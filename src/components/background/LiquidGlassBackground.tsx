@@ -22,7 +22,7 @@ function createBlobs(): Blob[] {
     {
       target: { ...RESTING_CENTER },
       pos: { ...RESTING_CENTER },
-      radius: 0.26,
+      radius: 0.11,
       damping: 0.08,
       offset: { x: 0, y: 0 },
       wanderPhase: 0,
@@ -31,18 +31,18 @@ function createBlobs(): Blob[] {
     {
       target: { ...RESTING_CENTER },
       pos: { ...RESTING_CENTER },
-      radius: 0.17,
+      radius: 0.07,
       damping: 0.05,
-      offset: { x: 0.14, y: 0.12 },
+      offset: { x: 0.06, y: 0.05 },
       wanderPhase: 2.1,
       wanderSpeed: 0.13,
     },
     {
       target: { ...RESTING_CENTER },
       pos: { ...RESTING_CENTER },
-      radius: 0.12,
+      radius: 0.05,
       damping: 0.035,
-      offset: { x: -0.16, y: -0.14 },
+      offset: { x: -0.07, y: -0.06 },
       wanderPhase: 4.2,
       wanderSpeed: 0.21,
     },
@@ -80,9 +80,9 @@ export function LiquidGlassBackground() {
         uResolution: { value: new Vec2(1, 1) },
         uTime: { value: 0 },
         uIntro: { value: reducedMotion ? 1 : 0 },
-        uBlobA: { value: new Vec3(0.78, 0.66, 0.26) },
-        uBlobB: { value: new Vec3(0.92, 0.78, 0.17) },
-        uBlobC: { value: new Vec3(0.62, 0.52, 0.12) },
+        uBlobA: { value: new Vec3(0.78, 0.66, 0.11) },
+        uBlobB: { value: new Vec3(0.84, 0.71, 0.07) },
+        uBlobC: { value: new Vec3(0.71, 0.6, 0.05) },
       },
     });
     const mesh = new Mesh(gl, { geometry, program });
@@ -160,8 +160,8 @@ export function LiquidGlassBackground() {
             desiredX = pointer.x + blob.offset.x * 0.6;
             desiredY = pointer.y + blob.offset.y * 0.6;
           } else {
-            desiredX += Math.cos(elapsed * blob.wanderSpeed + blob.wanderPhase) * 0.05;
-            desiredY += Math.sin(elapsed * blob.wanderSpeed * 1.3 + blob.wanderPhase) * 0.04;
+            desiredX += Math.cos(elapsed * blob.wanderSpeed + blob.wanderPhase) * 0.022;
+            desiredY += Math.sin(elapsed * blob.wanderSpeed * 1.3 + blob.wanderPhase) * 0.018;
           }
 
           blob.target.x = desiredX;
