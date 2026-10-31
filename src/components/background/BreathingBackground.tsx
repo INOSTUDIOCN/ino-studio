@@ -123,18 +123,13 @@ export function BreathingBackground({ variant }: { variant: "home" | "services" 
     resize();
     window.addEventListener("resize", resize);
 
-    const pointer = { x: restingCenter.x, y: restingCenter.y, active: false };
-    let idleTimeout: ReturnType<typeof setTimeout> | null = null;
+    const pointer = { x: restingCenter.x, y: restingCenter.y, hasMoved: false };
 
     function setPointerFromClient(clientX: number, clientY: number) {
       const rect = container!.getBoundingClientRect();
       pointer.x = (clientX - rect.left) / rect.width;
       pointer.y = 1 - (clientY - rect.top) / rect.height;
-      pointer.active = true;
-      if (idleTimeout) clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => {
-        pointer.active = false;
-      }, 2200);
+      pointer.hasMoved = true;
     }
 
     function onPointerMove(event: PointerEvent) {
@@ -172,18 +167,25 @@ export function BreathingBackground({ variant }: { variant: "home" | "services" 
         program.uniforms.uIntro.value = Math.min(easeOutBack(introT), 1.08);
 
         blobs.forEach((blob) => {
-          let desiredX = restingCenter.x + blob.offset.x;
-          let desiredY = restingCenter.y + blob.offset.y;
+          const wanderX = Math.cos(elapsed * blob.wanderSpeed + blob.wanderPhase) * 0.022;
+          const wanderY = Math.sin(elapsed * blob.wanderSpeed * 1.3 + blob.wanderPhase) * 0.018;
 
-          if (pointer.active) {
+          let desiredX: number;
+          let desiredY: number;
+
+          if (pointer.hasMoved) {
             const influence = config.pointerInfluence;
             desiredX =
-              restingCenter.x * (1 - influence) + (pointer.x + blob.offset.x * 0.6) * influence;
+              restingCenter.x * (1 - influence) +
+              (pointer.x + blob.offset.x * 0.6) * influence +
+              wanderX * 0.3;
             desiredY =
-              restingCenter.y * (1 - influence) + (pointer.y + blob.offset.y * 0.6) * influence;
+              restingCenter.y * (1 - influence) +
+              (pointer.y + blob.offset.y * 0.6) * influence +
+              wanderY * 0.3;
           } else {
-            desiredX += Math.cos(elapsed * blob.wanderSpeed + blob.wanderPhase) * 0.022;
-            desiredY += Math.sin(elapsed * blob.wanderSpeed * 1.3 + blob.wanderPhase) * 0.018;
+            desiredX = restingCenter.x + blob.offset.x + wanderX;
+            desiredY = restingCenter.y + blob.offset.y + wanderY;
           }
 
           blob.target.x = desiredX;
@@ -221,7 +223,6 @@ export function BreathingBackground({ variant }: { variant: "home" | "services" 
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", onVisibilityChange);
-      if (idleTimeout) clearTimeout(idleTimeout);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       container?.removeChild(gl.canvas);
     };
