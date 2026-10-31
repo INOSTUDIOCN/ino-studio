@@ -23,7 +23,7 @@ export function LanguageSwitch() {
     const origin = { x: event.clientX, y: event.clientY };
     await cover(origin);
     router.replace({ pathname }, { locale: nextLocale });
-    await new Promise((resolve) => setTimeout(resolve, 160));
+    await new Promise((resolve) => setTimeout(resolve, 560));
     await reveal();
   }
 

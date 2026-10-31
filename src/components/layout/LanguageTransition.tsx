@@ -9,7 +9,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import Image from "next/image";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { LanguageTransitionCanvas } from "@/components/layout/LanguageTransitionCanvas";
 
 type Origin = { x: number; y: number };
 type Phase = "idle" | "covering" | "covered" | "revealing";
@@ -22,8 +24,8 @@ type LanguageTransitionContextValue = {
 const LanguageTransitionContext =
   createContext<LanguageTransitionContextValue | null>(null);
 
-const COVER_MS = 520;
-const REVEAL_MS = 420;
+const COVER_MS = 620;
+const REVEAL_MS = 460;
 const REDUCED_MS = 140;
 
 function wait(ms: number) {
@@ -60,6 +62,7 @@ export function LanguageTransitionProvider({
   }, [reducedMotion]);
 
   const value = useMemo(() => ({ cover, reveal }), [cover, reveal]);
+  const active = phase !== "idle";
 
   return (
     <LanguageTransitionContext.Provider value={value}>
@@ -75,7 +78,20 @@ export function LanguageTransitionProvider({
           } as React.CSSProperties
         }
       >
-        <span className="lang-transition-mark" />
+        {!reducedMotion && active && (
+          <LanguageTransitionCanvas
+            active={active}
+            origin={origin}
+            progressMs={COVER_MS}
+          />
+        )}
+        <Image
+          src="/logo.png"
+          alt=""
+          width={490}
+          height={125}
+          className="lang-transition-mark"
+        />
       </div>
     </LanguageTransitionContext.Provider>
   );
