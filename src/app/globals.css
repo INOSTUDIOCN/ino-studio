@@ -248,21 +248,33 @@ body {
   }
 }
 
-.cta-liquid {
-  border-radius: 61% 39% 55% 45% / 45% 55% 41% 59%;
-  animation: liquid-morph 8s var(--ease-liquid) infinite;
+.cta-scan {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
 }
 
-@keyframes liquid-morph {
-  0%,
+.cta-scan::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  animation: cta-scan-sweep 2.8s linear infinite;
+}
+
+@keyframes cta-scan-sweep {
+  0% {
+    left: -40%;
+  }
   100% {
-    border-radius: 61% 39% 55% 45% / 45% 55% 41% 59%;
-  }
-  33% {
-    border-radius: 45% 55% 42% 58% / 58% 42% 55% 45%;
-  }
-  66% {
-    border-radius: 55% 45% 61% 39% / 39% 61% 45% 55%;
+    left: 130%;
   }
 }
 
