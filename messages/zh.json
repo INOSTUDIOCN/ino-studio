@@ -2,6 +2,8 @@
   "nav": {
     "ariaLabel": "主导航",
     "home": "首页",
+    "services": "服务",
+    "studio": "工作室",
     "quote": "报价",
     "clientSpace": "客户空间"
   },
@@ -13,6 +15,40 @@
   "home": {
     "tagline": "每个项目，独一无二。",
     "subtitle": "网站、Discord 服务器与定制应用开发。",
+    "cta": "获取报价"
+  },
+  "services": {
+    "eyebrow": "服务",
+    "title": "网站、Discord 服务器、应用程序。",
+    "subtitle": "没有现成模板。每个项目从第一次沟通到上线，都专为您量身打造。",
+    "items": {
+      "web": {
+        "title": "网站",
+        "description": "展示网站、作品集、预约系统、在线商店——为您的业务量身定制，而非通用模板。"
+      },
+      "discord": {
+        "title": "Discord 服务器",
+        "description": "结构、身份组、自动化：为您的社群或业务配置好的服务器，开箱即用。"
+      },
+      "apps": {
+        "title": "应用程序",
+        "description": "量身定制的工具，精准满足业务需求，而非套用通用方案。"
+      }
+    },
+    "ctaTitle": "有项目想法？",
+    "cta": "获取报价"
+  },
+  "studio": {
+    "eyebrow": "工作室",
+    "title": "一个工作室，一个人，一份严谨。",
+    "paragraph1": "伊诺工作室从第一次沟通到上线，只有一个对接人——没有中间人，需求不会在多人之间流失。每个项目都由我亲自设计和开发。",
+    "paragraph2": "我的客户既有法语用户，也有中文用户：每个网站、服务器或应用都为这两类用户而设计。",
+    "values": {
+      "bespoke": { "title": "量身定制", "description": "没有模板，为您的业务量身设计。" },
+      "bilingual": { "title": "双语", "description": "一个了解您法语和中文客户的工作室。" },
+      "direct": { "title": "直接沟通", "description": "从报价到上线，只有一个对接人。" }
+    },
+    "ctaTitle": "聊聊您的项目。",
     "cta": "获取报价"
   }
 }

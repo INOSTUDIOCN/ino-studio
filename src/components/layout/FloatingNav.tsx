@@ -7,8 +7,9 @@ export function FloatingNav() {
 
   const links = [
     { href: "/", label: t("home") },
+    { href: "/services", label: t("services") },
+    { href: "/studio", label: t("studio") },
     { href: "/devis", label: t("quote") },
-    { href: "/espace-client", label: t("clientSpace") },
   ];
 
   return (
