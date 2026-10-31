@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { LiquidGlassBackground } from "@/components/background/LiquidGlassBackground";
+import { ScrollScene } from "@/components/background/ScrollScene";
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -9,7 +9,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
   return (
     <>
-      <LiquidGlassBackground />
+      <ScrollScene variant="home" />
       <div className="flex min-h-[75vh] flex-col items-center justify-center px-4 text-center">
         <h1 className="intro-rise intro-rise-1 font-display max-w-3xl text-5xl font-bold tracking-tight text-ink sm:text-6xl lg:text-7xl">
           {t("tagline")}
