@@ -40,18 +40,18 @@ const SCENES: Record<"home" | "services" | "studio", SceneConfig> = {
   services: {
     restingCenter: { x: 0.2, y: 0.74 },
     blobs: [
-      { radius: 0.085, damping: 0.07, offset: { x: -0.02, y: 0 }, wanderPhase: 0.6, wanderSpeed: 0.15 },
-      { radius: 0.06, damping: 0.05, offset: { x: 0.14, y: 0.03 }, wanderPhase: 2.7, wanderSpeed: 0.12 },
-      { radius: 0.045, damping: 0.04, offset: { x: 0.05, y: -0.07 }, wanderPhase: 4.9, wanderSpeed: 0.2 },
+      { radius: 0.11, damping: 0.08, offset: { x: 0, y: 0 }, wanderPhase: 0.6, wanderSpeed: 0.15 },
+      { radius: 0.07, damping: 0.05, offset: { x: 0.06, y: 0.05 }, wanderPhase: 2.7, wanderSpeed: 0.12 },
+      { radius: 0.05, damping: 0.035, offset: { x: -0.07, y: -0.06 }, wanderPhase: 4.9, wanderSpeed: 0.2 },
     ],
     pointerInfluence: 1,
   },
   studio: {
     restingCenter: { x: 0.5, y: 0.7 },
     blobs: [
-      { radius: 0.075, damping: 0.065, offset: { x: -0.08, y: 0.01 }, wanderPhase: 1.1, wanderSpeed: 0.16 },
-      { radius: 0.058, damping: 0.05, offset: { x: 0.07, y: -0.02 }, wanderPhase: 3.3, wanderSpeed: 0.11 },
-      { radius: 0.04, damping: 0.04, offset: { x: 0, y: 0.05 }, wanderPhase: 5.4, wanderSpeed: 0.19 },
+      { radius: 0.11, damping: 0.08, offset: { x: 0, y: 0 }, wanderPhase: 1.1, wanderSpeed: 0.16 },
+      { radius: 0.07, damping: 0.05, offset: { x: 0.06, y: 0.05 }, wanderPhase: 3.3, wanderSpeed: 0.11 },
+      { radius: 0.05, damping: 0.035, offset: { x: -0.07, y: -0.06 }, wanderPhase: 5.4, wanderSpeed: 0.19 },
     ],
     pointerInfluence: 1,
   },
