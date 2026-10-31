@@ -112,6 +112,71 @@ body {
   animation-delay: 360ms;
 }
 
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+.custom-cursor-active input,
+.custom-cursor-active textarea,
+.custom-cursor-active [contenteditable="true"] {
+  cursor: text !important;
+}
+
+.custom-cursor-dot-wrap,
+.custom-cursor-ring-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-glass);
+}
+
+.custom-cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  transition: transform var(--duration-fast) var(--ease-glass);
+}
+
+.custom-cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 999px;
+  border: 1px solid rgba(18, 18, 18, 0.35);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    width var(--duration-base) var(--ease-glass),
+    height var(--duration-base) var(--ease-glass),
+    margin var(--duration-base) var(--ease-glass),
+    background var(--duration-base) var(--ease-glass),
+    border-color var(--duration-base) var(--ease-glass);
+}
+
+.custom-cursor-dot-wrap[data-state="hover"] .custom-cursor-dot {
+  transform: scale(0.25);
+}
+
+.custom-cursor-ring-wrap[data-state="hover"] .custom-cursor-ring {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  background: rgba(18, 18, 18, 0.06);
+  border-color: rgba(18, 18, 18, 0.55);
+}
+
+.custom-cursor-dot-wrap[data-state="text"],
+.custom-cursor-ring-wrap[data-state="text"] {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

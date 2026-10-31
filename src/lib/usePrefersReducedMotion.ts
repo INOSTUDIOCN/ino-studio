@@ -1,21 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-function getInitialReducedMotion() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 export function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(getInitialReducedMotion);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-
-  return reduced;
+  return useMediaQuery("(prefers-reduced-motion: reduce)");
 }
