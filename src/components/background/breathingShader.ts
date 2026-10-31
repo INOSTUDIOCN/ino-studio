@@ -77,25 +77,24 @@ export const fragment = /* glsl */ `
     vec2 refractedUv = uv - normal * refractStrength * refractFalloff;
     vec3 refractedBg = bgGradient(refractedUv);
 
-    vec3 glass = mix(refractedBg, vec3(1.0), 0.12);
-
-    float facingLight = clamp(dot(normal, normalize(vec2(-0.6, 0.8))), -1.0, 1.0);
-    float lambert = 0.5 + 0.5 * facingLight;
-    glass *= mix(0.86, 1.05, lambert);
+    vec3 glass = mix(refractedBg, vec3(1.0), 0.22);
 
     float rim = smoothstep(0.018, 0.0, abs(d));
     vec2 lightDir = normalize(vec2(-0.6, 0.8));
     float facing = clamp(dot(normal, lightDir), 0.0, 1.0);
     float sparkle = 0.5 + 0.5 * sin(uTime * 0.6);
-    glass += rim * facing * (0.4 + 0.14 * sparkle);
+    glass += rim * facing * (0.55 + 0.18 * sparkle);
+
+    float shade = clamp(-dot(normal, lightDir), 0.0, 1.0);
+    glass -= rim * shade * 0.12;
 
     vec2 blobACenter = uBlobA.xy * vec2(aspect, 1.0);
     vec2 specCenter = blobACenter + lightDir * uBlobA.z * 0.4;
     float spec = smoothstep(uBlobA.z * 0.85, uBlobA.z * -0.1, length(p - specCenter));
-    glass += spec * 0.2 * inside;
+    glass += spec * 0.22 * inside;
 
     float shadowD = scene(p - vec2(0.0, 0.018), aspect, uIntro);
-    float shadow = smoothstep(0.0, -0.03, shadowD) * (1.0 - inside) * 0.07;
+    float shadow = smoothstep(0.0, -0.03, shadowD) * (1.0 - inside) * 0.08;
     bg = mix(bg, bg * 0.9, shadow);
 
     vec3 color = mix(bg, glass, inside);
