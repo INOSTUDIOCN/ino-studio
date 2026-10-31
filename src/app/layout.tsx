@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { CustomCursor } from "@/components/cursor/CustomCursor";
 import { LanguageTransitionProvider } from "@/components/layout/LanguageTransition";
+import { LiquidGlassFilter } from "@/components/ui/LiquidGlassFilter";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${geistSans.variable} ${geistMono.variable} ${generalSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <LiquidGlassFilter />
         <LanguageTransitionProvider>
           <CustomCursor />
           {children}
