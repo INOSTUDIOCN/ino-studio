@@ -13,7 +13,7 @@ export function LiquidGlassFilter() {
       <filter id="liquid-glass-distortion" colorInterpolationFilters="sRGB">
         <feTurbulence
           type="fractalNoise"
-          baseFrequency="0.009 0.014"
+          baseFrequency="0.0035 0.006"
           numOctaves="2"
           seed="7"
           result="noise"
@@ -21,17 +21,17 @@ export function LiquidGlassFilter() {
           {!reducedMotion && (
             <animate
               attributeName="baseFrequency"
-              dur="26s"
-              values="0.009 0.014;0.013 0.019;0.009 0.014"
+              dur="30s"
+              values="0.0035 0.006;0.005 0.008;0.0035 0.006"
               repeatCount="indefinite"
             />
           )}
         </feTurbulence>
-        <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
+        <feGaussianBlur in="noise" stdDeviation="6" result="softNoise" />
         <feDisplacementMap
           in="SourceGraphic"
           in2="softNoise"
-          scale="46"
+          scale="34"
           xChannelSelector="R"
           yChannelSelector="G"
         />
