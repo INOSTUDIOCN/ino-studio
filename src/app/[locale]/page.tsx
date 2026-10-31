@@ -7,6 +7,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const tTopbar = await getTranslations("topbar");
 
   return (
     <>
@@ -23,10 +24,10 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
           {t("subtitle")}
         </p>
         <Link
-          href="/devis"
-          className="cta-pulse intro-rise intro-rise-3 mt-10 rounded-full bg-ink px-7 py-3.5 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+          href="/connexion"
+          className="cta-liquid cta-pulse intro-rise intro-rise-3 mt-10 bg-ink px-9 py-4 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
         >
-          {t("cta")}
+          {tTopbar("login")}
         </Link>
       </div>
     </>
