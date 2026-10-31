@@ -13,7 +13,7 @@
     "languageSwitchAria": "Changer de langue"
   },
   "home": {
-    "tagline": "Chaque projet, une pièce unique.",
+    "tagline": "Chaque projet, une <em>pièce unique</em>.",
     "subtitle": "Sites web, serveurs Discord et applications sur-mesure.",
     "cta": "Demander un devis"
   },
@@ -40,7 +40,7 @@
   },
   "studio": {
     "eyebrow": "Studio",
-    "title": "Un studio, une personne, une exigence.",
+    "title": "Un studio, une personne, <em>une exigence</em>.",
     "paragraph1": "Ino Studio, c'est un seul interlocuteur du premier échange à la mise en ligne — pas d'intermédiaire, pas de brief qui se perd entre plusieurs personnes. Je conçois et je développe moi-même chaque projet.",
     "paragraph2": "Mon public est aussi bien francophone que chinois : chaque site, serveur ou application est pensé pour parler aux deux à la fois.",
     "values": {

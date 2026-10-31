@@ -1,0 +1,231 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { Mesh, Program, Renderer, Triangle, Vec2, Vec3 } from "ogl";
+import { vertex, fragment } from "@/components/background/breathingShader";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+
+type Blob = {
+  target: { x: number; y: number };
+  pos: { x: number; y: number };
+  radius: number;
+  damping: number;
+  offset: { x: number; y: number };
+  wanderPhase: number;
+  wanderSpeed: number;
+};
+
+type SceneConfig = {
+  restingCenter: { x: number; y: number };
+  blobs: Array<{
+    radius: number;
+    damping: number;
+    offset: { x: number; y: number };
+    wanderPhase: number;
+    wanderSpeed: number;
+  }>;
+  pointerInfluence: number;
+};
+
+const SCENES: Record<"home" | "services" | "studio", SceneConfig> = {
+  home: {
+    restingCenter: { x: 0.78, y: 0.66 },
+    blobs: [
+      { radius: 0.11, damping: 0.08, offset: { x: 0, y: 0 }, wanderPhase: 0, wanderSpeed: 0.18 },
+      { radius: 0.07, damping: 0.05, offset: { x: 0.06, y: 0.05 }, wanderPhase: 2.1, wanderSpeed: 0.13 },
+      { radius: 0.05, damping: 0.035, offset: { x: -0.07, y: -0.06 }, wanderPhase: 4.2, wanderSpeed: 0.21 },
+    ],
+    pointerInfluence: 1,
+  },
+  services: {
+    restingCenter: { x: 0.2, y: 0.74 },
+    blobs: [
+      { radius: 0.085, damping: 0.07, offset: { x: -0.02, y: 0 }, wanderPhase: 0.6, wanderSpeed: 0.15 },
+      { radius: 0.06, damping: 0.05, offset: { x: 0.14, y: 0.03 }, wanderPhase: 2.7, wanderSpeed: 0.12 },
+      { radius: 0.045, damping: 0.04, offset: { x: 0.05, y: -0.07 }, wanderPhase: 4.9, wanderSpeed: 0.2 },
+    ],
+    pointerInfluence: 0.25,
+  },
+  studio: {
+    restingCenter: { x: 0.5, y: 0.7 },
+    blobs: [
+      { radius: 0.075, damping: 0.065, offset: { x: -0.08, y: 0.01 }, wanderPhase: 1.1, wanderSpeed: 0.16 },
+      { radius: 0.058, damping: 0.05, offset: { x: 0.07, y: -0.02 }, wanderPhase: 3.3, wanderSpeed: 0.11 },
+      { radius: 0.04, damping: 0.04, offset: { x: 0, y: 0.05 }, wanderPhase: 5.4, wanderSpeed: 0.19 },
+    ],
+    pointerInfluence: 0.25,
+  },
+};
+
+function easeOutBack(t: number) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+}
+
+export function BreathingBackground({ variant }: { variant: "home" | "services" | "studio" }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const config = SCENES[variant];
+    const restingCenter = config.restingCenter;
+
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 2), alpha: false });
+    } catch {
+      return;
+    }
+
+    const gl = renderer.gl;
+    if (!gl) return;
+
+    gl.canvas.style.display = "block";
+    gl.canvas.style.width = "100%";
+    gl.canvas.style.height = "100%";
+    container.appendChild(gl.canvas);
+
+    const geometry = new Triangle(gl);
+    const program = new Program(gl, {
+      vertex,
+      fragment,
+      uniforms: {
+        uResolution: { value: new Vec2(1, 1) },
+        uTime: { value: 0 },
+        uIntro: { value: reducedMotion ? 1 : 0 },
+        uBlobA: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[0].radius) },
+        uBlobB: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[1].radius) },
+        uBlobC: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[2].radius) },
+      },
+    });
+    const mesh = new Mesh(gl, { geometry, program });
+
+    const blobs: Blob[] = config.blobs.map((b) => ({
+      target: { ...restingCenter },
+      pos: { ...restingCenter },
+      radius: b.radius,
+      damping: b.damping,
+      offset: b.offset,
+      wanderPhase: b.wanderPhase,
+      wanderSpeed: b.wanderSpeed,
+    }));
+    const uniformKeys = ["uBlobA", "uBlobB", "uBlobC"] as const;
+
+    function resize() {
+      const { clientWidth, clientHeight } = container!;
+      renderer.setSize(clientWidth, clientHeight);
+      program.uniforms.uResolution.value.set(clientWidth, clientHeight);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const pointer = { x: restingCenter.x, y: restingCenter.y, active: false };
+    let idleTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function setPointerFromClient(clientX: number, clientY: number) {
+      const rect = container!.getBoundingClientRect();
+      pointer.x = (clientX - rect.left) / rect.width;
+      pointer.y = 1 - (clientY - rect.top) / rect.height;
+      pointer.active = true;
+      if (idleTimeout) clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        pointer.active = false;
+      }, 2200);
+    }
+
+    function onPointerMove(event: PointerEvent) {
+      setPointerFromClient(event.clientX, event.clientY);
+    }
+
+    if (!reducedMotion) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
+    let raf = 0;
+    let startTime = performance.now();
+    const introStart = performance.now();
+    let visible = document.visibilityState === "visible";
+
+    function onVisibilityChange() {
+      visible = document.visibilityState === "visible";
+      if (visible) {
+        startTime = performance.now() - elapsed * 1000;
+        tick();
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    let elapsed = 0;
+
+    function tick() {
+      if (!visible) return;
+      elapsed = (performance.now() - startTime) / 1000;
+      program.uniforms.uTime.value = elapsed;
+
+      if (!reducedMotion) {
+        const introElapsed = (performance.now() - introStart) / 1000;
+        const introT = Math.min(introElapsed / 0.9, 1);
+        program.uniforms.uIntro.value = Math.min(easeOutBack(introT), 1.08);
+
+        blobs.forEach((blob) => {
+          let desiredX = restingCenter.x + blob.offset.x;
+          let desiredY = restingCenter.y + blob.offset.y;
+
+          if (pointer.active) {
+            const influence = config.pointerInfluence;
+            desiredX =
+              restingCenter.x * (1 - influence) + (pointer.x + blob.offset.x * 0.6) * influence;
+            desiredY =
+              restingCenter.y * (1 - influence) + (pointer.y + blob.offset.y * 0.6) * influence;
+          } else {
+            desiredX += Math.cos(elapsed * blob.wanderSpeed + blob.wanderPhase) * 0.022;
+            desiredY += Math.sin(elapsed * blob.wanderSpeed * 1.3 + blob.wanderPhase) * 0.018;
+          }
+
+          blob.target.x = desiredX;
+          blob.target.y = desiredY;
+          blob.pos.x += (blob.target.x - blob.pos.x) * blob.damping;
+          blob.pos.y += (blob.target.y - blob.pos.y) * blob.damping;
+        });
+
+        blobs.forEach((blob, i) => {
+          const key = uniformKeys[i];
+          program.uniforms[key].value.set(blob.pos.x, blob.pos.y, blob.radius);
+        });
+      }
+
+      renderer.render({ scene: mesh });
+      raf = requestAnimationFrame(tick);
+    }
+
+    if (reducedMotion) {
+      blobs.forEach((blob, i) => {
+        const key = uniformKeys[i];
+        program.uniforms[key].value.set(
+          restingCenter.x + blob.offset.x,
+          restingCenter.y + blob.offset.y,
+          blob.radius
+        );
+      });
+      renderer.render({ scene: mesh });
+    } else {
+      tick();
+    }
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      if (idleTimeout) clearTimeout(idleTimeout);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      container?.removeChild(gl.canvas);
+    };
+  }, [variant, reducedMotion]);
+
+  return <div ref={containerRef} aria-hidden="true" className="fixed inset-0 -z-10" />;
+}

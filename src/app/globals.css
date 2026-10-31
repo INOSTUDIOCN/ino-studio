@@ -141,6 +141,127 @@ body {
   animation-delay: 360ms;
 }
 
+.reveal-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.reveal-word {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 640ms var(--ease-glass);
+  will-change: transform;
+}
+
+.reveal-word--visible {
+  transform: translateY(0);
+}
+
+.hero-reveal {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 900ms var(--ease-glass);
+}
+
+.hero-reveal--visible {
+  clip-path: inset(0 0% 0 0);
+}
+
+.text-sheen {
+  background: linear-gradient(
+    115deg,
+    var(--color-ink) 35%,
+    #8c8d94 50%,
+    var(--color-ink) 65%
+  );
+  background-size: 260% 100%;
+  background-position: 140% 0%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: text-sheen-sweep 11s ease-in-out infinite;
+}
+
+@keyframes text-sheen-sweep {
+  0%,
+  100% {
+    background-position: 140% 0%;
+  }
+  50% {
+    background-position: -40% 0%;
+  }
+}
+
+.text-emphasis {
+  font-size: 1.3em;
+  letter-spacing: -0.015em;
+}
+
+.eyebrow-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  vertical-align: middle;
+  animation: dot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.cta-pulse {
+  position: relative;
+}
+
+.cta-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(18, 18, 18, 0.3);
+  animation: cta-pulse-ring 3.2s var(--ease-liquid) infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70%,
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
+
+.ghost-numeral {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--color-ink);
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+}
+
 .lang-transition-overlay {
   position: fixed;
   inset: 0;
