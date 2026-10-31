@@ -30,7 +30,8 @@
   --color-ink-soft: var(--color-ink-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-general-sans);
+  --font-display: var(--font-general-sans), "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", sans-serif;
 }
 
 body {
