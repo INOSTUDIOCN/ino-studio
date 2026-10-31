@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "ariaLabel": "主导航",
+    "home": "首页",
+    "quote": "报价",
+    "clientSpace": "客户空间"
+  },
+  "topbar": {
+    "homeAria": "伊诺工作室 — 首页",
+    "login": "登录",
+    "languageSwitchAria": "切换语言"
+  },
+  "home": {
+    "title": "Ino Studio",
+    "subtitle": "网站、Discord 服务器与定制应用开发。",
+    "cta": "获取报价"
+  }
+}

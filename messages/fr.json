@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "ariaLabel": "Navigation principale",
+    "home": "Accueil",
+    "quote": "Devis",
+    "clientSpace": "Espace client"
+  },
+  "topbar": {
+    "homeAria": "Ino Studio — accueil",
+    "login": "Se connecter",
+    "languageSwitchAria": "Changer de langue"
+  },
+  "home": {
+    "title": "Ino Studio",
+    "subtitle": "Sites web, serveurs Discord et applications sur-mesure.",
+    "cta": "Demander un devis"
+  }
+}
