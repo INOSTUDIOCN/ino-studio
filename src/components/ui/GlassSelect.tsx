@@ -54,10 +54,10 @@ export function GlassSelect({
         aria-haspopup="listbox"
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center justify-between rounded-2xl border border-ink/10 bg-paper/70 px-4 py-3 text-sm transition-all duration-200",
-          "focus:outline-none focus-visible:border-ink/40 focus-visible:ring-2 focus-visible:ring-ink/15",
-          open && "border-ink/40 ring-2 ring-ink/15",
-          selected ? "text-ink" : "text-ink-soft"
+          "flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-sm transition-all duration-200",
+          "focus:outline-none focus-visible:border-ink/60 focus-visible:ring-2 focus-visible:ring-ink/25",
+          open ? "border-ink/60 bg-ink/5 ring-2 ring-ink/25" : "border-ink/10 bg-paper/70",
+          selected ? "text-ink font-medium" : "text-ink-soft"
         )}
       >
         <span>{selectedLabel ?? placeholder}</span>
@@ -96,8 +96,10 @@ export function GlassSelect({
                 setOpen(false);
               }}
               className={cn(
-                "w-full rounded-xl px-3 py-2 text-left text-sm transition-colors duration-150 hover:bg-ink/5",
-                option.value === selected ? "text-ink font-semibold" : "text-ink-soft"
+                "w-full rounded-xl px-3 py-2 text-left text-sm transition-colors duration-150",
+                option.value === selected
+                  ? "bg-ink text-paper font-semibold"
+                  : "text-ink-soft hover:bg-ink/8 hover:text-ink"
               )}
             >
               {option.label}
