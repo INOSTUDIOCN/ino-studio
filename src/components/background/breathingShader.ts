@@ -98,7 +98,8 @@ export const fragment = /* glsl */ `
     bg = mix(bg, bg * 0.9, shadow);
 
     vec3 color = mix(bg, glass, inside);
+    float alpha = max(inside, shadow);
 
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, alpha);
   }
 `;

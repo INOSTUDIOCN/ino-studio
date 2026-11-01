@@ -63,7 +63,13 @@ function easeOutBack(t: number) {
   return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 }
 
-export function BreathingBackground({ variant }: { variant: "home" | "services" | "devis" }) {
+export function BreathingBackground({
+  variant,
+  layer = "back",
+}: {
+  variant: "home" | "services" | "devis";
+  layer?: "back" | "front";
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -76,7 +82,7 @@ export function BreathingBackground({ variant }: { variant: "home" | "services" 
 
     let renderer: Renderer;
     try {
-      renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 2), alpha: false });
+      renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 2), alpha: true });
     } catch {
       return;
     }
@@ -228,5 +234,11 @@ export function BreathingBackground({ variant }: { variant: "home" | "services" 
     };
   }, [variant, reducedMotion]);
 
-  return <div ref={containerRef} aria-hidden="true" className="fixed inset-0 -z-10" />;
+  return (
+    <div
+      ref={containerRef}
+      aria-hidden="true"
+      className={`fixed inset-0 pointer-events-none ${layer === "front" ? "z-10" : "-z-10"}`}
+    />
+  );
 }
