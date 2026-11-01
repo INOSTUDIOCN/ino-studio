@@ -23,5 +23,26 @@
       "apps": { "title": "应用程序" }
     },
     "cta": "获取报价"
+  },
+  "devis": {
+    "title": "获取报价",
+    "subtitle": "介绍一下您的项目，我会尽快回复您。",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "service": "项目类型",
+      "serviceOptions": {
+        "web": "网站",
+        "discord": "Discord 服务器",
+        "app": "应用程序",
+        "other": "其他"
+      },
+      "message": "您的项目",
+      "messagePlaceholder": "简单描述一下您的项目。",
+      "submit": "发送请求",
+      "submitting": "发送中",
+      "success": "谢谢，您的请求已发送，我会尽快回复您。",
+      "error": "出现问题，请稍后重试。"
+    }
   }
 }

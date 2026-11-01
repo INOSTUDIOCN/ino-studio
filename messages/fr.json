@@ -23,5 +23,26 @@
       "apps": { "title": "Applications" }
     },
     "cta": "Demander un devis"
+  },
+  "devis": {
+    "title": "Demander un devis",
+    "subtitle": "Présentez votre projet, je vous réponds rapidement.",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "service": "Type de projet",
+      "serviceOptions": {
+        "web": "Site web",
+        "discord": "Serveur Discord",
+        "app": "Application",
+        "other": "Autre"
+      },
+      "message": "Votre projet",
+      "messagePlaceholder": "Décrivez votre projet en quelques mots.",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi en cours",
+      "success": "Merci, votre demande a bien été envoyée. Je vous réponds rapidement.",
+      "error": "Un problème est survenu, réessayez dans un instant."
+    }
   }
 }
