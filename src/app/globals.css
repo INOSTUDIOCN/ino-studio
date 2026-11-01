@@ -42,6 +42,15 @@ body {
     "Noto Sans SC", sans-serif;
 }
 
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 .glass-panel {
   position: relative;
   background: var(--glass-bg);
