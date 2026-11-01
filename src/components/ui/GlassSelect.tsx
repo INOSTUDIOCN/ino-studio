@@ -54,8 +54,9 @@ export function GlassSelect({
         aria-haspopup="listbox"
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center justify-between rounded-2xl border border-ink/10 bg-paper/70 px-4 py-3 text-sm transition-colors duration-200",
-          "focus:border-ink/30 focus:outline-none",
+          "flex w-full items-center justify-between rounded-2xl border border-ink/10 bg-paper/70 px-4 py-3 text-sm transition-all duration-200",
+          "focus:outline-none focus-visible:border-ink/40 focus-visible:ring-2 focus-visible:ring-ink/15",
+          open && "border-ink/40 ring-2 ring-ink/15",
           selected ? "text-ink" : "text-ink-soft"
         )}
       >
