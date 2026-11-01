@@ -89,5 +89,74 @@
       "completed": "Terminé"
     },
     "openContract": "Ouvrir"
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Gérez les comptes clients, les projets et les contrats.",
+    "newClient": "Nouveau client",
+    "fullName": "Nom complet",
+    "email": "Email",
+    "password": "Mot de passe",
+    "create": "Créer",
+    "newProject": "Nouveau projet",
+    "selectClient": "Choisir un client",
+    "projectName": "Nom du projet",
+    "projects": "Projets",
+    "back": "Retour à l'administration",
+    "steps": "Étapes",
+    "stepLabel": "Nom de l'étape",
+    "stepStatus": {
+      "pending": "À venir",
+      "in_progress": "En cours",
+      "awaiting_client": "À valider",
+      "done": "Validée"
+    },
+    "files": "Fichiers",
+    "uploadFile": "Envoyer le fichier",
+    "contracts": "Contrats",
+    "selectContractType": "Choisir un type de contrat",
+    "contractType": {
+      "discussion": "Contrat de discussion",
+      "precontract": "Pré contrat",
+      "signature": "Contrat à signer"
+    },
+    "contractStatus": {
+      "draft": "En préparation",
+      "sent": "Envoyé",
+      "completed": "Terminé"
+    },
+    "optionsPlaceholder": "Pour un contrat de discussion, une option par ligne.",
+    "summaryPlaceholder": "Pour un pré contrat, le résumé à faire valider par le client.",
+    "bodyPlaceholder": "Pour le contrat à signer, le texte complet du contrat.",
+    "send": "Envoyer au client"
+  },
+  "contratPage": {
+    "notFound": "Ce contrat n'existe pas ou n'est plus disponible.",
+    "draft": "Ce contrat n'est pas encore disponible.",
+    "completed": "Ce contrat a déjà été traité, merci.",
+    "downloadPdf": "Télécharger le PDF signé",
+    "discussion": {
+      "title": "Contrat de discussion",
+      "subtitle": "Cochez ce qui vous intéresse.",
+      "submit": "Envoyer mes choix",
+      "submitting": "Envoi en cours"
+    },
+    "precontract": {
+      "title": "Pré contrat",
+      "subtitle": "Merci de relire le résumé ci dessous avant de valider.",
+      "approve": "J'approuve",
+      "approving": "Validation en cours"
+    },
+    "signature": {
+      "title": "Contrat à signer",
+      "subtitle": "Lisez le contrat puis signez dans le cadre ci dessous.",
+      "clear": "Effacer",
+      "submit": "Signer et envoyer",
+      "submitting": "Envoi en cours",
+      "required": "Merci de signer avant d'envoyer."
+    },
+    "pdfTitle": "Contrat Ino Studio",
+    "pdfSignedAt": "Signé le",
+    "pdfIp": "Adresse IP"
   }
 }

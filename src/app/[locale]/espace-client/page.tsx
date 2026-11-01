@@ -10,7 +10,7 @@ import { logout } from "./actions";
 
 type StepRow = { id: string; label: string; position: number; status: string };
 type FileRow = { id: string; name: string; storage_path: string };
-type ContractRow = { id: string; type: string; status: string };
+type ContractRow = { id: string; type: string; status: string; token: string };
 
 export const instant = false;
 
@@ -31,7 +31,7 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
   const { data: projects } = await supabase
     .from("projects")
     .select(
-      "id, name, status, project_steps(id, label, position, status), project_files(id, name, storage_path), contracts(id, type, status)"
+      "id, name, status, project_steps(id, label, position, status), project_files(id, name, storage_path), contracts(id, type, status, token)"
     )
     .order("created_at", { ascending: true });
 
@@ -142,9 +142,19 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
                         className="flex items-center justify-between rounded-2xl border border-ink/10 bg-paper/60 px-4 py-3"
                       >
                         <span className="text-sm text-ink">{t(`contractType.${contract.type}`)}</span>
-                        <span className="text-xs font-medium text-ink-soft">
-                          {t(`contractStatus.${contract.status}`)}
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-medium text-ink-soft">
+                            {t(`contractStatus.${contract.status}`)}
+                          </span>
+                          {contract.status !== "draft" && (
+                            <a
+                              href={`/contrat/${contract.token}`}
+                              className="text-sm font-medium text-ink underline"
+                            >
+                              {t("openContract")}
+                            </a>
+                          )}
+                        </div>
                       </li>
                     ))}
                   </ul>

@@ -89,5 +89,74 @@
       "completed": "已完成"
     },
     "openContract": "打开"
+  },
+  "admin": {
+    "title": "管理后台",
+    "subtitle": "管理客户账户、项目与合同。",
+    "newClient": "新建客户",
+    "fullName": "姓名",
+    "email": "邮箱",
+    "password": "密码",
+    "create": "创建",
+    "newProject": "新建项目",
+    "selectClient": "选择客户",
+    "projectName": "项目名称",
+    "projects": "项目",
+    "back": "返回管理后台",
+    "steps": "项目步骤",
+    "stepLabel": "步骤名称",
+    "stepStatus": {
+      "pending": "待开始",
+      "in_progress": "进行中",
+      "awaiting_client": "待确认",
+      "done": "已确认"
+    },
+    "files": "文件",
+    "uploadFile": "上传文件",
+    "contracts": "合同",
+    "selectContractType": "选择合同类型",
+    "contractType": {
+      "discussion": "讨论合同",
+      "precontract": "预合同",
+      "signature": "签署合同"
+    },
+    "contractStatus": {
+      "draft": "准备中",
+      "sent": "已发送",
+      "completed": "已完成"
+    },
+    "optionsPlaceholder": "讨论合同，每行填写一个选项。",
+    "summaryPlaceholder": "预合同，请填写需要客户确认的内容摘要。",
+    "bodyPlaceholder": "签署合同，请填写完整的合同文本。",
+    "send": "发送给客户"
+  },
+  "contratPage": {
+    "notFound": "该合同不存在或已失效。",
+    "draft": "该合同尚未开放。",
+    "completed": "该合同已处理完成，谢谢。",
+    "downloadPdf": "下载已签署的PDF",
+    "discussion": {
+      "title": "讨论合同",
+      "subtitle": "请勾选您感兴趣的内容。",
+      "submit": "发送我的选择",
+      "submitting": "正在发送"
+    },
+    "precontract": {
+      "title": "预合同",
+      "subtitle": "请在确认前仔细阅读以下摘要。",
+      "approve": "我已确认",
+      "approving": "正在确认"
+    },
+    "signature": {
+      "title": "签署合同",
+      "subtitle": "请阅读合同内容，然后在下方签名。",
+      "clear": "清除",
+      "submit": "签署并发送",
+      "submitting": "正在发送",
+      "required": "请先签名再发送。"
+    },
+    "pdfTitle": "Ino Studio 合同",
+    "pdfSignedAt": "签署时间",
+    "pdfIp": "IP 地址"
   }
 }

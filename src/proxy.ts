@@ -8,6 +8,10 @@ const intlMiddleware = createMiddleware(routing);
 const PROTECTED_SEGMENTS = new Set(["espace-client", "admin"]);
 
 export default async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/contrat")) {
+    return NextResponse.next();
+  }
+
   const intlResponse = intlMiddleware(request);
 
   if (intlResponse.status >= 300 && intlResponse.status < 400) {
