@@ -23,26 +23,13 @@ export async function createClientAccount(locale: string, formData: FormData) {
     throw new Error(error?.message ?? "Création du compte impossible");
   }
 
-  await admin.from("profiles").insert({
+  const { error: profileError } = await admin.from("profiles").insert({
     id: data.user.id,
     role: "client",
     full_name: fullName,
     email,
   });
-
-  revalidatePath(`/${locale}/admin`);
-}
-
-export async function createProject(locale: string, formData: FormData) {
-  const clientId = String(formData.get("clientId") ?? "");
-  const name = String(formData.get("name") ?? "").trim();
-
-  if (!clientId || !name) {
-    throw new Error("Champs manquants");
-  }
-
-  const admin = createSupabaseAdminClient();
-  await admin.from("projects").insert({ client_id: clientId, name });
+  if (profileError) throw new Error(profileError.message);
 
   revalidatePath(`/${locale}/admin`);
 }

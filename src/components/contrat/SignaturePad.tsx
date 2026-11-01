@@ -2,15 +2,16 @@
 
 import { useRef, useState } from "react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { signContract } from "@/app/contrat/[token]/actions";
+import { ContractContent } from "@/components/contrat/ContractContent";
+import type { JSONContent } from "@/lib/contract-content";
 
 export function SignaturePad({
-  token,
-  body,
+  signAction,
+  content,
   labels,
 }: {
-  token: string;
-  body: string;
+  signAction: (dataUrl: string) => Promise<{ downloadUrl: string | null }>;
+  content: JSONContent;
   labels: {
     title: string;
     subtitle: string;
@@ -19,6 +20,7 @@ export function SignaturePad({
     submitting: string;
     required: string;
     completed: string;
+    downloadPdf: string;
   };
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,6 +29,7 @@ export function SignaturePad({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
   const [done, setDone] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
   function getContext() {
     const canvas = canvasRef.current;
@@ -77,20 +80,25 @@ export function SignaturePad({
 
   if (done) {
     return (
-      <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-center">
+      <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-center">
         <p className="font-display text-lg font-semibold text-ink">{labels.completed}</p>
+        {downloadUrl && (
+          <a href={downloadUrl} className="mt-4 inline-block text-sm font-medium text-ink underline">
+            {labels.downloadPdf}
+          </a>
+        )}
       </GlassPanel>
     );
   }
 
   return (
-    <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-left">
+    <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-left">
       <h2 className="font-display text-lg font-semibold text-ink">{labels.title}</h2>
       <p className="mt-2 text-sm text-ink-soft">{labels.subtitle}</p>
 
-      <p className="mt-6 max-h-60 overflow-y-auto whitespace-pre-wrap rounded-2xl border border-ink/10 bg-paper/60 px-4 py-4 text-sm text-ink">
-        {body}
-      </p>
+      <div className="mt-6 max-h-96 overflow-y-auto rounded-2xl border border-ink/10 bg-paper/60 px-4 py-4">
+        <ContractContent doc={content} />
+      </div>
 
       <canvas
         ref={canvasRef}
@@ -126,7 +134,8 @@ export function SignaturePad({
               }
               setPending(true);
               try {
-                await signContract(token, canvas.toDataURL("image/png"));
+                const result = await signAction(canvas.toDataURL("image/png"));
+                setDownloadUrl(result.downloadUrl);
                 setDone(true);
               } finally {
                 setPending(false);

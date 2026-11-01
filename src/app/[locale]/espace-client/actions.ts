@@ -1,16 +1,8 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-
-export async function logout(formData: FormData) {
-  const locale = String(formData.get("locale") ?? "fr");
-  const supabase = await createSupabaseServerClient();
-  await supabase.auth.signOut();
-  redirect(`/${locale}`);
-}
 
 export async function validateStep(locale: string, stepId: string) {
   const supabase = await createSupabaseServerClient();

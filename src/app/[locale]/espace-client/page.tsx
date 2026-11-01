@@ -6,11 +6,9 @@ import { RevealText } from "@/components/ui/RevealText";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ValidateStepButton } from "@/components/espace-client/ValidateStepButton";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
-import { logout } from "./actions";
 
 type StepRow = { id: string; label: string; position: number; status: string };
 type FileRow = { id: string; name: string; storage_path: string };
-type ContractRow = { id: string; type: string; status: string; token: string };
 
 export const instant = false;
 
@@ -30,9 +28,7 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
 
   const { data: projects } = await supabase
     .from("projects")
-    .select(
-      "id, name, status, project_steps(id, label, position, status), project_files(id, name, storage_path), contracts(id, type, status, token)"
-    )
+    .select("id, name, status, project_steps(id, label, position, status), project_files(id, name, storage_path)")
     .order("created_at", { ascending: true });
 
   const admin = createSupabaseAdminClient();
@@ -48,8 +44,7 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
       const steps = [...((project.project_steps as StepRow[] | null) ?? [])].sort(
         (a, b) => a.position - b.position
       );
-      const contracts = (project.contracts as ContractRow[] | null) ?? [];
-      return { ...project, project_files: files, project_steps: steps, contracts };
+      return { ...project, project_files: files, project_steps: steps };
     })
   );
 
@@ -57,20 +52,9 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
     <>
       <BreathingBackground variant="home" />
       <div className="mx-auto max-w-4xl px-4 pt-16 pb-20">
-        <div className="relative z-20 flex flex-wrap items-center justify-between gap-4">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            <RevealText text={t("title")} stagger={35} />
-          </h1>
-          <form action={logout}>
-            <input type="hidden" name="locale" value={locale} />
-            <button
-              type="submit"
-              className="rounded-full border border-ink/10 bg-paper/70 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-paper"
-            >
-              {t("logout")}
-            </button>
-          </form>
-        </div>
+        <h1 className="relative z-20 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          <RevealText text={t("title")} stagger={35} />
+        </h1>
         <p className="relative z-20 mt-3 text-ink-soft">{t("subtitle")}</p>
 
         <div className="relative z-20 mt-12 flex flex-col gap-8">
@@ -124,37 +108,6 @@ export default async function EspaceClient({ params }: PageProps<"/[locale]/espa
                             {t("download")}
                           </a>
                         )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold tracking-wide text-ink-soft uppercase">{t("contracts")}</h3>
-                {project.contracts.length === 0 ? (
-                  <p className="mt-3 text-sm text-ink-soft">{t("noContracts")}</p>
-                ) : (
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {project.contracts.map((contract) => (
-                      <li
-                        key={contract.id}
-                        className="flex items-center justify-between rounded-2xl border border-ink/10 bg-paper/60 px-4 py-3"
-                      >
-                        <span className="text-sm text-ink">{t(`contractType.${contract.type}`)}</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs font-medium text-ink-soft">
-                            {t(`contractStatus.${contract.status}`)}
-                          </span>
-                          {contract.status !== "draft" && (
-                            <a
-                              href={`/contrat/${contract.token}`}
-                              className="text-sm font-medium text-ink underline"
-                            >
-                              {t("openContract")}
-                            </a>
-                          )}
-                        </div>
                       </li>
                     ))}
                   </ul>

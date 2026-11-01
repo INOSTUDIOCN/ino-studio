@@ -2,36 +2,50 @@
 
 import { useState } from "react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { approvePrecontract } from "@/app/contrat/[token]/actions";
+import { ContractContent } from "@/components/contrat/ContractContent";
+import type { JSONContent } from "@/lib/contract-content";
 
 export function PrecontractApproval({
-  token,
-  summary,
+  approveAction,
+  content,
   labels,
 }: {
-  token: string;
-  summary: string;
-  labels: { title: string; subtitle: string; approve: string; approving: string; completed: string };
+  approveAction: () => Promise<{ downloadUrl: string | null }>;
+  content: JSONContent;
+  labels: {
+    title: string;
+    subtitle: string;
+    approve: string;
+    approving: string;
+    completed: string;
+    downloadPdf: string;
+  };
 }) {
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
   if (done) {
     return (
-      <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-center">
+      <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-center">
         <p className="font-display text-lg font-semibold text-ink">{labels.completed}</p>
+        {downloadUrl && (
+          <a href={downloadUrl} className="mt-4 inline-block text-sm font-medium text-ink underline">
+            {labels.downloadPdf}
+          </a>
+        )}
       </GlassPanel>
     );
   }
 
   return (
-    <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-left">
+    <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-left">
       <h2 className="font-display text-lg font-semibold text-ink">{labels.title}</h2>
       <p className="mt-2 text-sm text-ink-soft">{labels.subtitle}</p>
 
-      <p className="mt-6 whitespace-pre-wrap rounded-2xl border border-ink/10 bg-paper/60 px-4 py-4 text-sm text-ink">
-        {summary}
-      </p>
+      <div className="mt-6">
+        <ContractContent doc={content} />
+      </div>
 
       <span className="cta-scan mt-6 flex justify-center">
         <button
@@ -40,7 +54,8 @@ export function PrecontractApproval({
           onClick={async () => {
             setPending(true);
             try {
-              await approvePrecontract(token);
+              const result = await approveAction();
+              setDownloadUrl(result.downloadUrl);
               setDone(true);
             } finally {
               setPending(false);

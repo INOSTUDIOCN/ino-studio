@@ -2,11 +2,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { addStep, setStepStatus, uploadFile, createContract, sendContract } from "./actions";
+import { addStep, setStepStatus, uploadFile } from "./actions";
 
 type StepRow = { id: string; label: string; position: number; status: string };
 type FileRow = { id: string; name: string };
-type ContractRow = { id: string; type: string; status: string; token: string; locale: string };
+type ContractRow = { id: string; type: string; status: string };
 type ProjectRow = {
   id: string;
   name: string;
@@ -48,7 +48,7 @@ export default async function AdminProject({
 
   const { data: contracts } = await supabase
     .from("contracts")
-    .select("id, type, status, token, locale")
+    .select("id, type, status")
     .eq("project_id", projectId)
     .order("created_at", { ascending: true });
 
@@ -58,11 +58,14 @@ export default async function AdminProject({
 
   const typedProject = project as ProjectRow;
   const client = Array.isArray(typedProject.profiles) ? typedProject.profiles[0] : typedProject.profiles;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const contractList = (contracts as ContractRow[] | null) ?? [];
 
   return (
     <div className="mx-auto max-w-4xl px-4 pt-16 pb-20 text-left">
-      <Link href="/admin" className="text-sm font-medium text-ink-soft hover:text-ink">
+      <Link
+        href={`/admin/clients/${typedProject.client_id}`}
+        className="text-sm font-medium text-ink-soft hover:text-ink"
+      >
         {t("back")}
       </Link>
       <h1 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
@@ -131,76 +134,28 @@ export default async function AdminProject({
         </form>
       </GlassPanel>
 
-      <GlassPanel className="mt-8 rounded-3xl p-8">
-        <h2 className="font-display text-lg font-semibold text-ink">{t("contracts")}</h2>
-        <ul className="mt-4 flex flex-col gap-3">
-          {(contracts as ContractRow[] | null)?.map((contract) => (
-            <li key={contract.id} className="rounded-2xl border border-ink/10 bg-paper/60 px-4 py-3">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="text-sm text-ink">
-                  {t(`contractType.${contract.type}`)} ({contract.locale})
-                </span>
+      {contractList.length > 0 && (
+        <GlassPanel className="mt-8 rounded-3xl p-8">
+          <h2 className="font-display text-lg font-semibold text-ink">{t("contracts")}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {contractList.map((contract) => (
+              <li
+                key={contract.id}
+                className="flex items-center justify-between rounded-2xl border border-ink/10 bg-paper/60 px-4 py-3"
+              >
+                <span className="text-sm text-ink">{t(`contractType.${contract.type}`)}</span>
                 <span className="text-xs font-medium text-ink-soft">{t(`contractStatus.${contract.status}`)}</span>
-              </div>
-              {contract.status === "draft" && (
-                <form action={sendContract.bind(null, locale, projectId, contract.id)} className="mt-2">
-                  <button
-                    type="submit"
-                    className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
-                  >
-                    {t("send")}
-                  </button>
-                </form>
-              )}
-              {contract.status !== "draft" && (
-                <p className="mt-2 break-all text-xs text-ink-soft">
-                  {siteUrl}/contrat/{contract.token}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <form
-          action={createContract.bind(null, locale, projectId, typedProject.client_id)}
-          className="mt-4 flex flex-col gap-3"
-        >
-          <select name="type" required className={fieldClass}>
-            <option value="">{t("selectContractType")}</option>
-            <option value="discussion">{t("contractType.discussion")}</option>
-            <option value="precontract">{t("contractType.precontract")}</option>
-            <option value="signature">{t("contractType.signature")}</option>
-          </select>
-          <select name="contractLocale" defaultValue="fr" className={fieldClass}>
-            <option value="fr">Français</option>
-            <option value="zh">中文</option>
-          </select>
-          <textarea
-            name="options"
-            rows={4}
-            placeholder={t("optionsPlaceholder")}
-            className={`${fieldClass} resize-none`}
-          />
-          <textarea
-            name="summary"
-            rows={4}
-            placeholder={t("summaryPlaceholder")}
-            className={`${fieldClass} resize-none`}
-          />
-          <textarea
-            name="body"
-            rows={6}
-            placeholder={t("bodyPlaceholder")}
-            className={`${fieldClass} resize-none`}
-          />
-          <button
-            type="submit"
-            className="shrink-0 self-start rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={`/admin/clients/${typedProject.client_id}`}
+            className="mt-4 inline-block text-sm font-medium text-ink underline"
           >
-            {t("create")}
-          </button>
-        </form>
-      </GlassPanel>
+            {t("manageContractsOnClient")}
+          </Link>
+        </GlassPanel>
+      )}
     </div>
   );
 }

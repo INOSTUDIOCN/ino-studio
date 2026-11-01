@@ -5,11 +5,15 @@
     "services": "Services",
     "quote": "Devis",
     "clientSpace": "Espace client",
-    "admin": "Administration"
+    "admin": "Administration",
+    "projects": "Projets",
+    "contracts": "Contrats",
+    "clients": "Clients"
   },
   "topbar": {
     "homeAria": "Ino Studio, accueil",
     "login": "Se connecter",
+    "logout": "Se déconnecter",
     "languageSwitchAria": "Changer de langue"
   },
   "home": {
@@ -103,7 +107,9 @@
     "selectClient": "Choisir un client",
     "projectName": "Nom du projet",
     "projects": "Projets",
-    "back": "Retour à l'administration",
+    "projectsHint": "Tous les projets, tous clients confondus.",
+    "clients": "Clients",
+    "back": "Retour",
     "steps": "Étapes",
     "stepLabel": "Nom de l'étape",
     "stepStatus": {
@@ -115,7 +121,11 @@
     "files": "Fichiers",
     "uploadFile": "Envoyer le fichier",
     "contracts": "Contrats",
+    "contractsHint": "Tous les contrats, tous clients confondus.",
     "selectContractType": "Choisir un type de contrat",
+    "selectContractLocale": "Langue du contrat",
+    "selectProjectOptional": "Lier à un projet (facultatif)",
+    "manageContractsOnClient": "Gérer les contrats depuis la fiche client",
     "contractType": {
       "discussion": "Contrat de discussion",
       "precontract": "Pré contrat",
@@ -126,20 +136,27 @@
       "sent": "Envoyé",
       "completed": "Terminé"
     },
-    "optionsPlaceholder": "Pour un contrat de discussion, une option par ligne.",
-    "summaryPlaceholder": "Pour un pré contrat, le résumé à faire valider par le client.",
-    "bodyPlaceholder": "Pour le contrat à signer, le texte complet du contrat.",
+    "editorHeading": "Titre",
+    "editorParagraph": "Texte",
+    "editorBold": "Gras",
+    "editorBulletList": "Liste",
+    "editorChecklist": "Case à cocher",
     "send": "Envoyer au client"
   },
   "contratPage": {
     "notFound": "Ce contrat n'existe pas ou n'est plus disponible.",
     "draft": "Ce contrat n'est pas encore disponible.",
     "completed": "Ce contrat a déjà été traité, merci.",
-    "downloadPdf": "Télécharger le PDF signé",
+    "downloadPdf": "Télécharger le PDF",
     "discussion": {
       "title": "Contrat de discussion",
-      "subtitle": "Cochez ce qui vous intéresse.",
-      "submit": "Envoyer mes choix",
+      "subtitle": "Lisez le contrat et cochez ce qui vous intéresse.",
+      "review": "Voir le récapitulatif",
+      "reviewTitle": "Récapitulatif avant envoi",
+      "checked": "Coché",
+      "unchecked": "Non coché",
+      "back": "Modifier mes choix",
+      "submit": "Confirmer et envoyer",
       "submitting": "Envoi en cours"
     },
     "precontract": {

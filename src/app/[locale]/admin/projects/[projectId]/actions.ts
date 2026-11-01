@@ -13,18 +13,20 @@ export async function addStep(locale: string, projectId: string, formData: FormD
     .select("id", { count: "exact", head: true })
     .eq("project_id", projectId);
 
-  await admin.from("project_steps").insert({
+  const { error } = await admin.from("project_steps").insert({
     project_id: projectId,
     label,
     position: count ?? 0,
   });
+  if (error) throw new Error(error.message);
 
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
 }
 
 export async function setStepStatus(locale: string, projectId: string, stepId: string, status: string) {
   const admin = createSupabaseAdminClient();
-  await admin.from("project_steps").update({ status }).eq("id", stepId);
+  const { error } = await admin.from("project_steps").update({ status }).eq("id", stepId);
+  if (error) throw new Error(error.message);
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
 }
 
@@ -45,49 +47,12 @@ export async function uploadFile(locale: string, projectId: string, formData: Fo
     throw new Error(uploadError.message);
   }
 
-  await admin.from("project_files").insert({
+  const { error: insertError } = await admin.from("project_files").insert({
     project_id: projectId,
     name: file.name,
     storage_path: storagePath,
   });
+  if (insertError) throw new Error(insertError.message);
 
-  revalidatePath(`/${locale}/admin/projects/${projectId}`);
-}
-
-export async function createContract(locale: string, projectId: string, clientId: string, formData: FormData) {
-  const type = String(formData.get("type") ?? "");
-  const contractLocale = String(formData.get("contractLocale") ?? "fr");
-
-  let fieldsSchema: unknown;
-
-  if (type === "discussion") {
-    const raw = String(formData.get("options") ?? "");
-    fieldsSchema = raw
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
-  } else if (type === "precontract") {
-    fieldsSchema = { summary: String(formData.get("summary") ?? "").trim() };
-  } else if (type === "signature") {
-    fieldsSchema = { body: String(formData.get("body") ?? "").trim() };
-  } else {
-    throw new Error("Type de contrat invalide");
-  }
-
-  const admin = createSupabaseAdminClient();
-  await admin.from("contracts").insert({
-    project_id: projectId,
-    client_id: clientId,
-    type,
-    locale: contractLocale,
-    fields_schema: fieldsSchema,
-  });
-
-  revalidatePath(`/${locale}/admin/projects/${projectId}`);
-}
-
-export async function sendContract(locale: string, projectId: string, contractId: string) {
-  const admin = createSupabaseAdminClient();
-  await admin.from("contracts").update({ status: "sent" }).eq("id", contractId);
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
 }

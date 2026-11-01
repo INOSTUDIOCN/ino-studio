@@ -7,9 +7,16 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 const intlMiddleware = createMiddleware(routing);
 const PROTECTED_SEGMENTS = new Set(["espace-client", "admin"]);
 
+function withPathname(response: NextResponse, pathname: string) {
+  response.headers.set("x-pathname", pathname);
+  return response;
+}
+
 export default async function proxy(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/contrat")) {
-    return NextResponse.next();
+  const pathname = request.nextUrl.pathname;
+
+  if (pathname.startsWith("/contrat")) {
+    return withPathname(NextResponse.next(), pathname);
   }
 
   const intlResponse = intlMiddleware(request);
@@ -18,11 +25,11 @@ export default async function proxy(request: NextRequest) {
     return intlResponse;
   }
 
-  const segments = request.nextUrl.pathname.split("/").filter(Boolean);
+  const segments = pathname.split("/").filter(Boolean);
   const [locale, section] = segments;
 
   if (!section || !PROTECTED_SEGMENTS.has(section)) {
-    return intlResponse;
+    return withPathname(intlResponse, pathname);
   }
 
   let response = intlResponse;
@@ -47,7 +54,7 @@ export default async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.redirect(new URL(`/${locale}/connexion`, request.url));
+    return withPathname(NextResponse.redirect(new URL(`/${locale}/connexion`, request.url)), pathname);
   }
 
   if (section === "admin") {
@@ -59,11 +66,14 @@ export default async function proxy(request: NextRequest) {
       .single();
 
     if (!profile || profile.role !== "admin") {
-      return NextResponse.redirect(new URL(`/${locale}/espace-client`, request.url));
+      return withPathname(
+        NextResponse.redirect(new URL(`/${locale}/espace-client`, request.url)),
+        pathname
+      );
     }
   }
 
-  return response;
+  return withPathname(response, pathname);
 }
 
 export const config = {

@@ -12,15 +12,17 @@ export function GlassSelect({
   placeholder,
   required,
   className,
+  defaultValue,
 }: {
   name: string;
   options: Option[];
   placeholder: string;
   required?: boolean;
   className?: string;
+  defaultValue?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(defaultValue ?? "");
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

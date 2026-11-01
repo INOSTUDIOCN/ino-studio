@@ -4,9 +4,11 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 import { RevealText } from "@/components/ui/RevealText";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { DiscussionForm } from "@/components/contrat/DiscussionForm";
+import { DiscussionDocument } from "@/components/contrat/DiscussionDocument";
 import { PrecontractApproval } from "@/components/contrat/PrecontractApproval";
 import { SignaturePad } from "@/components/contrat/SignaturePad";
+import { submitDiscussion, approvePrecontract, signContract } from "./actions";
+import { EMPTY_CONTRACT_CONTENT, type JSONContent } from "@/lib/contract-content";
 
 export const instant = false;
 
@@ -15,7 +17,7 @@ type ContractData = {
   type: "discussion" | "precontract" | "signature";
   status: "draft" | "sent" | "completed";
   locale: "fr" | "zh";
-  fields_schema: unknown;
+  fields_schema: { content?: JSONContent } | null;
   pdf_path: string | null;
 };
 
@@ -36,9 +38,10 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
   const typedContract = contract as ContractData;
   const locale = typedContract.locale === "zh" ? "zh" : "fr";
   const t = await getTranslations({ locale, namespace: "contratPage" });
+  const content = typedContract.fields_schema?.content ?? EMPTY_CONTRACT_CONTENT;
 
   let downloadUrl: string | null = null;
-  if (typedContract.status === "completed" && typedContract.type === "signature" && typedContract.pdf_path) {
+  if (typedContract.status === "completed" && typedContract.pdf_path) {
     const { data } = await admin.storage.from("contract-pdfs").createSignedUrl(typedContract.pdf_path, 300);
     downloadUrl = data?.signedUrl ?? null;
   }
@@ -74,15 +77,21 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
 
           {typedContract.status === "sent" && typedContract.type === "discussion" && (
             <div className="contrat-card">
-              <DiscussionForm
-                token={token}
-                options={(typedContract.fields_schema as string[]) ?? []}
+              <DiscussionDocument
+                submitAction={submitDiscussion.bind(null, token)}
+                content={content}
                 labels={{
                   title: t("discussion.title"),
                   subtitle: t("discussion.subtitle"),
+                  review: t("discussion.review"),
+                  reviewTitle: t("discussion.reviewTitle"),
+                  checked: t("discussion.checked"),
+                  unchecked: t("discussion.unchecked"),
+                  back: t("discussion.back"),
                   submit: t("discussion.submit"),
                   submitting: t("discussion.submitting"),
                   completed: t("completed"),
+                  downloadPdf: t("downloadPdf"),
                 }}
               />
             </div>
@@ -91,14 +100,15 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
           {typedContract.status === "sent" && typedContract.type === "precontract" && (
             <div className="contrat-card">
               <PrecontractApproval
-                token={token}
-                summary={(typedContract.fields_schema as { summary?: string } | null)?.summary ?? ""}
+                approveAction={approvePrecontract.bind(null, token)}
+                content={content}
                 labels={{
                   title: t("precontract.title"),
                   subtitle: t("precontract.subtitle"),
                   approve: t("precontract.approve"),
                   approving: t("precontract.approving"),
                   completed: t("completed"),
+                  downloadPdf: t("downloadPdf"),
                 }}
               />
             </div>
@@ -107,8 +117,8 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
           {typedContract.status === "sent" && typedContract.type === "signature" && (
             <div className="contrat-card">
               <SignaturePad
-                token={token}
-                body={(typedContract.fields_schema as { body?: string } | null)?.body ?? ""}
+                signAction={signContract.bind(null, token)}
+                content={content}
                 labels={{
                   title: t("signature.title"),
                   subtitle: t("signature.subtitle"),
@@ -117,6 +127,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
                   submitting: t("signature.submitting"),
                   required: t("signature.required"),
                   completed: t("completed"),
+                  downloadPdf: t("downloadPdf"),
                 }}
               />
             </div>
