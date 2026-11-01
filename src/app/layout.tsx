@@ -37,7 +37,7 @@ const generalSans = localFont({
 export const metadata: Metadata = {
   title: "Ino Studio",
   description:
-    "Sites web, serveurs Discord et applications sur-mesure — Ino Studio.",
+    "Ino Studio, sites web, serveurs Discord et applications sur mesure.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

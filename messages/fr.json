@@ -8,13 +8,13 @@
     "clientSpace": "Espace client"
   },
   "topbar": {
-    "homeAria": "Ino Studio — accueil",
+    "homeAria": "Ino Studio, accueil",
     "login": "Se connecter",
     "languageSwitchAria": "Changer de langue"
   },
   "home": {
     "tagline": "Chaque projet, une <em>pièce unique</em>.",
-    "subtitle": "Sites web, serveurs Discord et applications sur-mesure."
+    "subtitle": "Sites web, serveurs Discord et applications sur mesure."
   },
   "services": {
     "eyebrow": "Services",
@@ -23,15 +23,15 @@
     "items": {
       "web": {
         "title": "Sites web",
-        "description": "Vitrines, portfolios, prise de rendez-vous, boutiques en ligne — un site pensé pour votre activité, pas un gabarit générique."
+        "description": "Vitrines, portfolios, systèmes de réservation, boutiques en ligne. Un site pensé pour votre activité, pas un gabarit générique."
       },
       "discord": {
         "title": "Serveurs Discord",
-        "description": "Structure, rôles, automatisations : un serveur configuré pour votre communauté ou votre activité, prêt à l'emploi."
+        "description": "Structure, rôles, automatisations. Un serveur configuré pour votre communauté ou votre activité, prêt à l'emploi."
       },
       "apps": {
         "title": "Applications",
-        "description": "Des outils sur-mesure, pensés pour répondre précisément à un besoin métier, pas à un cahier des charges générique."
+        "description": "Des outils sur mesure, pensés pour répondre précisément à un besoin métier, pas à un cahier des charges générique."
       }
     },
     "ctaTitle": "Un projet en tête ?",
@@ -40,10 +40,10 @@
   "studio": {
     "eyebrow": "Studio",
     "title": "Un studio, une personne, <em>une exigence</em>.",
-    "paragraph1": "Ino Studio, c'est un seul interlocuteur du premier échange à la mise en ligne — pas d'intermédiaire, pas de brief qui se perd entre plusieurs personnes. Je conçois et je développe moi-même chaque projet.",
-    "paragraph2": "Mon public est aussi bien francophone que chinois : chaque site, serveur ou application est pensé pour parler aux deux à la fois.",
+    "paragraph1": "Ino Studio, c'est un seul interlocuteur du premier échange à la mise en ligne. Pas d'intermédiaire, pas de brief qui se perd entre plusieurs personnes. Je conçois et je développe seul chaque projet.",
+    "paragraph2": "Mon public est aussi bien francophone que chinois. Chaque site, serveur ou application est pensé pour parler aux deux à la fois.",
     "values": {
-      "bespoke": { "title": "Sur-mesure", "description": "Pas de modèle, un projet pensé pour votre activité." },
+      "bespoke": { "title": "Sur mesure", "description": "Pas de modèle, un projet pensé pour votre activité." },
       "bilingual": { "title": "Bilingue", "description": "Un studio qui comprend vos clients français et chinois." },
       "direct": { "title": "Direct", "description": "Un seul interlocuteur, du devis à la mise en ligne." }
     },
