@@ -27,7 +27,7 @@ type SceneConfig = {
   pointerInfluence: number;
 };
 
-const SCENES: Record<"home" | "services", SceneConfig> = {
+const SCENES: Record<"home" | "services" | "devis", SceneConfig> = {
   home: {
     restingCenter: { x: 0.78, y: 0.66 },
     blobs: [
@@ -46,6 +46,15 @@ const SCENES: Record<"home" | "services", SceneConfig> = {
     ],
     pointerInfluence: 1,
   },
+  devis: {
+    restingCenter: { x: 0.84, y: 0.78 },
+    blobs: [
+      { radius: 0.11, damping: 0.08, offset: { x: 0, y: 0 }, wanderPhase: 1.6, wanderSpeed: 0.17 },
+      { radius: 0.07, damping: 0.05, offset: { x: 0.06, y: 0.05 }, wanderPhase: 3.8, wanderSpeed: 0.1 },
+      { radius: 0.05, damping: 0.035, offset: { x: -0.07, y: -0.06 }, wanderPhase: 5.9, wanderSpeed: 0.22 },
+    ],
+    pointerInfluence: 1,
+  },
 };
 
 function easeOutBack(t: number) {
@@ -54,7 +63,7 @@ function easeOutBack(t: number) {
   return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 }
 
-export function BreathingBackground({ variant }: { variant: "home" | "services" }) {
+export function BreathingBackground({ variant }: { variant: "home" | "services" | "devis" }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
