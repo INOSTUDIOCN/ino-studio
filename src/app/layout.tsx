@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} ${generalSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <LiquidGlassFilter />
         <LanguageTransitionProvider>
           <CustomCursor />
