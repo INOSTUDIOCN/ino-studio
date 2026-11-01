@@ -103,6 +103,7 @@ export function BreathingBackground({
         uResolution: { value: new Vec2(1, 1) },
         uTime: { value: 0 },
         uIntro: { value: reducedMotion ? 1 : 0 },
+        uDiluted: { value: layer === "front" ? 1 : 0 },
         uBlobA: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[0].radius) },
         uBlobB: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[1].radius) },
         uBlobC: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[2].radius) },
@@ -232,7 +233,7 @@ export function BreathingBackground({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       container?.removeChild(gl.canvas);
     };
-  }, [variant, reducedMotion]);
+  }, [variant, reducedMotion, layer]);
 
   return (
     <div

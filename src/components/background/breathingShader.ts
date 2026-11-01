@@ -15,6 +15,7 @@ export const fragment = /* glsl */ `
   uniform vec2 uResolution;
   uniform float uTime;
   uniform float uIntro;
+  uniform float uDiluted;
   uniform vec3 uBlobA;
   uniform vec3 uBlobB;
   uniform vec3 uBlobC;
@@ -98,7 +99,10 @@ export const fragment = /* glsl */ `
     bg = mix(bg, bg * 0.9, shadow);
 
     vec3 color = mix(bg, glass, inside);
-    float alpha = max(inside, shadow);
+
+    float alphaOpaque = max(inside, shadow);
+    float alphaDiluted = clamp(inside * 0.16 + rim * facing * 0.4 + spec * 0.3 * inside + shadow, 0.0, 1.0);
+    float alpha = mix(alphaOpaque, alphaDiluted, uDiluted);
 
     gl_FragColor = vec4(color, alpha);
   }
