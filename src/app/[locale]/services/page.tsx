@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 import { RevealText } from "@/components/ui/RevealText";
+import { CardCarousel3D } from "@/components/ui/CardCarousel3D";
 
 export default async function Services({ params }: PageProps<"/[locale]/services">) {
   const { locale } = await params;
@@ -26,22 +27,24 @@ export default async function Services({ params }: PageProps<"/[locale]/services
           {t("subtitle")}
         </p>
 
-        <div className="intro-rise intro-rise-3 mt-14 grid gap-4 text-left sm:grid-cols-3">
-          {items.map((key, i) => (
-            <GlassPanel
-              key={key}
-              tilt
-              className="relative flex flex-col gap-3 rounded-3xl p-7"
-            >
-              <span className="ghost-numeral">{String(i + 1).padStart(2, "0")}</span>
-              <h2 className="font-display text-lg font-semibold text-ink">
-                {t(`items.${key}.title`)}
-              </h2>
-              <p className="text-sm leading-relaxed text-ink-soft">
-                {t(`items.${key}.description`)}
-              </p>
-            </GlassPanel>
-          ))}
+        <div className="intro-rise intro-rise-3 mt-14">
+          <CardCarousel3D>
+            {items.map((key, i) => (
+              <GlassPanel
+                key={key}
+                tilt
+                className="relative flex h-full flex-col gap-3 rounded-3xl p-7 text-left"
+              >
+                <span className="ghost-numeral">{String(i + 1).padStart(2, "0")}</span>
+                <h2 className="font-display text-lg font-semibold text-ink">
+                  {t(`items.${key}.title`)}
+                </h2>
+                <p className="text-sm leading-relaxed text-ink-soft">
+                  {t(`items.${key}.description`)}
+                </p>
+              </GlassPanel>
+            ))}
+          </CardCarousel3D>
         </div>
 
         <div className="intro-rise intro-rise-3 mt-16 flex flex-col items-center gap-5 pb-20">
