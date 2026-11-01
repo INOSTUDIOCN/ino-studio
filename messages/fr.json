@@ -44,5 +44,10 @@
       "success": "Merci, votre demande a bien été envoyée. Nous vous répondons rapidement.",
       "error": "Un problème est survenu, réessayez dans un instant."
     }
+  },
+  "notFound": {
+    "title": "Cette page n'existe pas.",
+    "subtitle": "Elle a été déplacée ou n'existe plus.",
+    "cta": "Retour à l'accueil"
   }
 }
