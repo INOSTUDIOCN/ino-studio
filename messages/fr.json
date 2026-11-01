@@ -3,7 +3,6 @@
     "ariaLabel": "Navigation principale",
     "home": "Accueil",
     "services": "Services",
-    "studio": "Studio",
     "quote": "Devis",
     "clientSpace": "Espace client"
   },
@@ -23,19 +22,6 @@
       "discord": { "title": "Serveurs Discord" },
       "apps": { "title": "Applications" }
     },
-    "cta": "Demander un devis"
-  },
-  "studio": {
-    "eyebrow": "Studio",
-    "title": "Un studio, une personne, <em>une exigence</em>.",
-    "paragraph1": "Ino Studio, c'est un seul interlocuteur du premier échange à la mise en ligne. Pas d'intermédiaire, pas de brief qui se perd entre plusieurs personnes. Je conçois et je développe seul chaque projet.",
-    "paragraph2": "Mon public est aussi bien francophone que chinois. Chaque site, serveur ou application est pensé pour parler aux deux à la fois.",
-    "values": {
-      "bespoke": { "title": "Sur mesure", "description": "Pas de modèle, un projet pensé pour votre activité." },
-      "bilingual": { "title": "Bilingue", "description": "Un studio qui comprend vos clients français et chinois." },
-      "direct": { "title": "Direct", "description": "Un seul interlocuteur, du devis à la mise en ligne." }
-    },
-    "ctaTitle": "Discutons de votre projet.",
     "cta": "Demander un devis"
   }
 }

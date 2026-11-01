@@ -20,7 +20,7 @@ export default async function Services({ params }: PageProps<"/[locale]/services
   return (
     <>
       <BreathingBackground variant="services" />
-      <div className="mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 pt-16 pb-20 text-center">
+      <div className="mx-auto max-w-4xl px-4 pt-16 pb-20 text-center">
         <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t("title")} stagger={35} />
         </h1>
@@ -47,12 +47,14 @@ export default async function Services({ params }: PageProps<"/[locale]/services
           </CardCarousel3D>
         </div>
 
-        <Link
-          href="/devis"
-          className="cta-pulse intro-rise intro-rise-3 mt-16 rounded-full bg-ink px-7 py-3.5 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
-        >
-          {t("cta")}
-        </Link>
+        <span className="cta-scan intro-rise intro-rise-3 mt-16">
+          <Link
+            href="/devis"
+            className="cta-scan-inner px-9 py-4 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+          >
+            {t("cta")}
+          </Link>
+        </span>
       </div>
     </>
   );
