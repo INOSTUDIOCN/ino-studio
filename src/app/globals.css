@@ -330,10 +330,6 @@ html::-webkit-scrollbar {
   cursor: text !important;
 }
 
-.custom-cursor-active select {
-  cursor: default !important;
-}
-
 .custom-cursor-wrap {
   position: fixed;
   top: 0;
@@ -378,8 +374,7 @@ html::-webkit-scrollbar {
   border-color: rgba(255, 255, 255, 0.78);
 }
 
-.custom-cursor-wrap[data-state="text"],
-.custom-cursor-wrap[data-state="native"] {
+.custom-cursor-wrap[data-state="text"] {
   opacity: 0 !important;
 }
 

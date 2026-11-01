@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { GlassSelect } from "@/components/ui/GlassSelect";
 import { submitDevisRequest, type DevisFormState } from "@/app/[locale]/devis/actions";
 
 const initialState: DevisFormState = { status: "idle" };
@@ -41,16 +42,15 @@ export function DevisForm() {
           placeholder={t("email")}
           className={fieldClass}
         />
-        <select name="service" required defaultValue="" className={fieldClass}>
-          <option value="" disabled>
-            {t("service")}
-          </option>
-          {SERVICE_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {t(`serviceOptions.${option}`)}
-            </option>
-          ))}
-        </select>
+        <GlassSelect
+          name="service"
+          required
+          placeholder={t("service")}
+          options={SERVICE_OPTIONS.map((option) => ({
+            value: option,
+            label: t(`serviceOptions.${option}`),
+          }))}
+        />
         <textarea
           name="message"
           required
