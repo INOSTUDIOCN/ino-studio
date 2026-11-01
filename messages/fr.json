@@ -4,7 +4,8 @@
     "home": "Accueil",
     "services": "Services",
     "quote": "Devis",
-    "clientSpace": "Espace client"
+    "clientSpace": "Espace client",
+    "admin": "Administration"
   },
   "topbar": {
     "homeAria": "Ino Studio, accueil",

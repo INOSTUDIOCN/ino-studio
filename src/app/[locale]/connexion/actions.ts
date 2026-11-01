@@ -20,11 +20,17 @@ export async function login(
   }
 
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error) {
+  if (error || !data.user) {
     return { status: "error" };
   }
 
-  redirect(`/${locale}/espace-client`);
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", data.user.id)
+    .single();
+
+  redirect(`/${locale}/${profile?.role === "admin" ? "admin" : "espace-client"}`);
 }

@@ -12,14 +12,16 @@ export async function ClientSpaceLink() {
     return null;
   }
 
+  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
   const t = await getTranslations("nav");
+  const isAdmin = profile?.role === "admin";
 
   return (
     <Link
-      href="/espace-client"
+      href={isAdmin ? "/admin" : "/espace-client"}
       className="rounded-full px-4 py-2 text-sm font-medium text-ink-soft transition-colors duration-200 hover:bg-ink/5 hover:text-ink"
     >
-      {t("clientSpace")}
+      {isAdmin ? t("admin") : t("clientSpace")}
     </Link>
   );
 }

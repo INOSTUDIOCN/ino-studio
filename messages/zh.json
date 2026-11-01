@@ -4,7 +4,8 @@
     "home": "首页",
     "services": "服务",
     "quote": "报价",
-    "clientSpace": "客户空间"
+    "clientSpace": "客户空间",
+    "admin": "管理后台"
   },
   "topbar": {
     "homeAria": "伊诺工作室，首页",
