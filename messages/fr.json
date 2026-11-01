@@ -19,22 +19,11 @@
   "services": {
     "eyebrow": "Services",
     "title": "Sites web, serveurs Discord, applications.",
-    "subtitle": "Pas de modèles tout faits. Chaque projet est pensé et construit spécifiquement pour vous, du premier échange à la mise en ligne.",
     "items": {
-      "web": {
-        "title": "Sites web",
-        "description": "Vitrines, portfolios, systèmes de réservation, boutiques en ligne. Un site pensé pour votre activité, pas un gabarit générique."
-      },
-      "discord": {
-        "title": "Serveurs Discord",
-        "description": "Structure, rôles, automatisations. Un serveur configuré pour votre communauté ou votre activité, prêt à l'emploi."
-      },
-      "apps": {
-        "title": "Applications",
-        "description": "Des outils sur mesure, pensés pour répondre précisément à un besoin métier, pas à un cahier des charges générique."
-      }
+      "web": { "title": "Sites web" },
+      "discord": { "title": "Serveurs Discord" },
+      "apps": { "title": "Applications" }
     },
-    "ctaTitle": "Un projet en tête ?",
     "cta": "Demander un devis"
   },
   "studio": {

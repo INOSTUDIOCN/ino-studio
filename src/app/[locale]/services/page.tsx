@@ -4,18 +4,23 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 import { RevealText } from "@/components/ui/RevealText";
 import { CardCarousel3D } from "@/components/ui/CardCarousel3D";
+import { BrandIcon, type BrandIconName } from "@/components/ui/BrandIcon";
+
+const ITEMS: Array<{ key: "web" | "discord" | "apps"; icons: BrandIconName[] }> = [
+  { key: "web", icons: ["chrome", "firefox"] },
+  { key: "discord", icons: ["discord"] },
+  { key: "apps", icons: ["apple", "android"] },
+];
 
 export default async function Services({ params }: PageProps<"/[locale]/services">) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("services");
 
-  const items = ["web", "discord", "apps"] as const;
-
   return (
     <>
       <BreathingBackground variant="services" />
-      <div className="mx-auto max-w-4xl px-4 pt-16 text-center">
+      <div className="mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 pt-16 pb-20 text-center">
         <p className="intro-rise intro-rise-1 text-sm font-medium uppercase tracking-[0.2em] text-ink-soft">
           <span className="eyebrow-dot" aria-hidden="true" />
           <RevealText text={t("eyebrow")} />
@@ -23,41 +28,35 @@ export default async function Services({ params }: PageProps<"/[locale]/services
         <h1 className="font-display mt-4 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t("title")} stagger={35} />
         </h1>
-        <p className="intro-rise intro-rise-2 mx-auto mt-5 max-w-xl text-balance text-ink-soft">
-          {t("subtitle")}
-        </p>
 
-        <div className="intro-rise intro-rise-3 mt-14">
+        <div className="intro-rise intro-rise-3 mt-16 w-full">
           <CardCarousel3D>
-            {items.map((key, i) => (
+            {ITEMS.map(({ key, icons }, i) => (
               <GlassPanel
                 key={key}
                 tilt
-                className="relative flex h-full flex-col gap-3 rounded-3xl p-7 text-left"
+                className="relative flex h-full flex-col items-center justify-center gap-4 rounded-3xl p-8 text-center"
               >
                 <span className="ghost-numeral">{String(i + 1).padStart(2, "0")}</span>
+                <div className="flex items-center gap-4 text-ink">
+                  {icons.map((icon) => (
+                    <BrandIcon key={icon} name={icon} className="h-8 w-8" />
+                  ))}
+                </div>
                 <h2 className="font-display text-lg font-semibold text-ink">
                   {t(`items.${key}.title`)}
                 </h2>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {t(`items.${key}.description`)}
-                </p>
               </GlassPanel>
             ))}
           </CardCarousel3D>
         </div>
 
-        <div className="intro-rise intro-rise-3 mt-16 flex flex-col items-center gap-5 pb-20">
-          <p className="font-display text-xl font-semibold text-ink">
-            <RevealText text={t("ctaTitle")} />
-          </p>
-          <Link
-            href="/devis"
-            className="cta-pulse rounded-full bg-ink px-7 py-3.5 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
-          >
-            {t("cta")}
-          </Link>
-        </div>
+        <Link
+          href="/devis"
+          className="cta-pulse intro-rise intro-rise-3 mt-16 rounded-full bg-ink px-7 py-3.5 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+        >
+          {t("cta")}
+        </Link>
       </div>
     </>
   );

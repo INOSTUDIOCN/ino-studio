@@ -19,22 +19,11 @@
   "services": {
     "eyebrow": "服务",
     "title": "网站、Discord 服务器、应用程序。",
-    "subtitle": "没有现成模板。每个项目从第一次沟通到上线，都专为您量身打造。",
     "items": {
-      "web": {
-        "title": "网站",
-        "description": "展示网站、作品集、预约系统、在线商店，为您的业务量身定制，而非通用模板。"
-      },
-      "discord": {
-        "title": "Discord 服务器",
-        "description": "结构、身份组、自动化，为您的社群或业务配置好的服务器，开箱即用。"
-      },
-      "apps": {
-        "title": "应用程序",
-        "description": "量身定制的工具，精准满足业务需求，而非套用通用方案。"
-      }
+      "web": { "title": "网站" },
+      "discord": { "title": "Discord 服务器" },
+      "apps": { "title": "应用程序" }
     },
-    "ctaTitle": "有项目想法？",
     "cta": "获取报价"
   },
   "studio": {
