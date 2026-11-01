@@ -19,14 +19,14 @@ export function DevisForm() {
 
   if (state.status === "success") {
     return (
-      <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-center">
+      <GlassPanel className="devis-card mx-auto max-w-lg rounded-3xl p-8 text-center">
         <p className="font-display text-lg font-semibold text-ink">{t("success")}</p>
       </GlassPanel>
     );
   }
 
   return (
-    <GlassPanel className="mx-auto max-w-lg rounded-3xl p-8 text-left">
+    <GlassPanel className="devis-card mx-auto max-w-lg rounded-3xl p-8 text-left">
       <form action={formAction} className="flex flex-col gap-4">
         <input
           name="name"

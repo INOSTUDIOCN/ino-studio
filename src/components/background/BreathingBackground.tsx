@@ -27,7 +27,7 @@ type SceneConfig = {
   pointerInfluence: number;
 };
 
-const SCENES: Record<"home" | "services" | "devis", SceneConfig> = {
+const SCENES: Record<"home" | "services", SceneConfig> = {
   home: {
     restingCenter: { x: 0.78, y: 0.66 },
     blobs: [
@@ -46,15 +46,6 @@ const SCENES: Record<"home" | "services" | "devis", SceneConfig> = {
     ],
     pointerInfluence: 1,
   },
-  devis: {
-    restingCenter: { x: 0.84, y: 0.78 },
-    blobs: [
-      { radius: 0.11, damping: 0.08, offset: { x: 0, y: 0 }, wanderPhase: 1.6, wanderSpeed: 0.17 },
-      { radius: 0.07, damping: 0.05, offset: { x: 0.06, y: 0.05 }, wanderPhase: 3.8, wanderSpeed: 0.1 },
-      { radius: 0.05, damping: 0.035, offset: { x: -0.07, y: -0.06 }, wanderPhase: 5.9, wanderSpeed: 0.22 },
-    ],
-    pointerInfluence: 1,
-  },
 };
 
 function easeOutBack(t: number) {
@@ -66,9 +57,12 @@ function easeOutBack(t: number) {
 export function BreathingBackground({
   variant,
   layer = "back",
+  cardSelector,
 }: {
-  variant: "home" | "services" | "devis";
+  variant: "home" | "services";
   layer?: "back" | "front";
+  /** CSS selector for a card the blob should dilute into when it overlaps it. */
+  cardSelector?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
@@ -103,7 +97,7 @@ export function BreathingBackground({
         uResolution: { value: new Vec2(1, 1) },
         uTime: { value: 0 },
         uIntro: { value: reducedMotion ? 1 : 0 },
-        uDiluted: { value: layer === "front" ? 1 : 0 },
+        uDiluted: { value: 0 },
         uBlobA: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[0].radius) },
         uBlobB: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[1].radius) },
         uBlobC: { value: new Vec3(restingCenter.x, restingCenter.y, config.blobs[2].radius) },
@@ -162,6 +156,26 @@ export function BreathingBackground({
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     let elapsed = 0;
+    let dilutedValue = 0;
+
+    function computeTargetDilution() {
+      if (!cardSelector) return 0;
+      const card = document.querySelector(cardSelector);
+      if (!card) return 0;
+
+      const { clientWidth, clientHeight } = container!;
+      const rect = card.getBoundingClientRect();
+      const primary = blobs[0];
+      const blobX = primary.pos.x * clientWidth;
+      const blobY = (1 - primary.pos.y) * clientHeight;
+      const radiusPx = primary.radius * clientHeight;
+
+      const closestX = Math.max(rect.left, Math.min(blobX, rect.right));
+      const closestY = Math.max(rect.top, Math.min(blobY, rect.bottom));
+      const dist = Math.hypot(blobX - closestX, blobY - closestY);
+
+      return Math.max(0, Math.min(1, 1 - dist / radiusPx));
+    }
 
     function tick() {
       if (!visible) return;
@@ -205,6 +219,12 @@ export function BreathingBackground({
           const key = uniformKeys[i];
           program.uniforms[key].value.set(blob.pos.x, blob.pos.y, blob.radius);
         });
+
+        if (cardSelector) {
+          const targetDilution = computeTargetDilution();
+          dilutedValue += (targetDilution - dilutedValue) * 0.1;
+          program.uniforms.uDiluted.value = dilutedValue;
+        }
       }
 
       renderer.render({ scene: mesh });
@@ -233,7 +253,7 @@ export function BreathingBackground({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       container?.removeChild(gl.canvas);
     };
-  }, [variant, reducedMotion, layer]);
+  }, [variant, reducedMotion, layer, cardSelector]);
 
   return (
     <div

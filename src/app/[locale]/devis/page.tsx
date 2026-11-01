@@ -10,7 +10,7 @@ export default async function Devis({ params }: PageProps<"/[locale]/devis">) {
 
   return (
     <>
-      <BreathingBackground variant="devis" layer="front" />
+      <BreathingBackground variant="home" layer="front" cardSelector=".devis-card" />
       <div className="mx-auto max-w-4xl px-4 pt-16 pb-20 text-center">
         <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t("title")} stagger={35} />
