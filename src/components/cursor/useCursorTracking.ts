@@ -3,11 +3,12 @@
 import { useEffect, useRef } from "react";
 
 export const INTERACTIVE_SELECTOR =
-  'a, button, [role="button"], input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"], select, summary, label';
+  'a, button, [role="button"], input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"], summary, label';
 export const TEXT_SELECTOR =
   'input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]), textarea, [contenteditable="true"]';
+export const NATIVE_SELECTOR = "select";
 
-export type CursorState = "default" | "hover" | "text";
+export type CursorState = "default" | "hover" | "text" | "native";
 
 export type Tracking = {
   raw: { x: number; y: number };
@@ -65,8 +66,13 @@ export function useCursorTracking(active: boolean) {
       const target = event.target as Element | null;
       const interactive = target?.closest(INTERACTIVE_SELECTOR) ?? null;
       const textEl = target?.closest(TEXT_SELECTOR) ?? null;
+      const nativeEl = target?.closest(NATIVE_SELECTOR) ?? null;
 
-      if (textEl) {
+      if (nativeEl) {
+        t.magnetTarget = null;
+        t.state = "native";
+        t.dark = false;
+      } else if (textEl) {
         t.magnetTarget = null;
         t.state = "text";
         t.dark = false;
