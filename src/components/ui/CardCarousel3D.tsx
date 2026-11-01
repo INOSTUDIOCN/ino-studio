@@ -16,6 +16,14 @@ export function CardCarousel3D({ children }: { children: ReactNode[] }) {
   const [active, setActive] = useState(0);
   const count = children.length;
 
+  function goPrev() {
+    setActive((current) => (current - 1 + count) % count);
+  }
+
+  function goNext() {
+    setActive((current) => (current + 1) % count);
+  }
+
   return (
     <div>
       <div className="card-carousel-stage">
@@ -48,17 +56,53 @@ export function CardCarousel3D({ children }: { children: ReactNode[] }) {
         })}
       </div>
 
-      <div className="card-carousel-dots">
-        {children.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            className={cn("card-carousel-dot", i === active && "card-carousel-dot--active")}
-            aria-label={`Afficher la carte ${i + 1}`}
-            aria-current={i === active}
-            onClick={() => setActive(i)}
-          />
-        ))}
+      <div className="card-carousel-controls">
+        <button
+          type="button"
+          className="card-carousel-arrow"
+          aria-label="Carte précédente"
+          onClick={goPrev}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path
+              d="M10 3L5 8L10 13"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        <div className="card-carousel-dots">
+          {children.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={cn("card-carousel-dot", i === active && "card-carousel-dot--active")}
+              aria-label={`Afficher la carte ${i + 1}`}
+              aria-current={i === active}
+              onClick={() => setActive(i)}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="card-carousel-arrow"
+          aria-label="Carte suivante"
+          onClick={goNext}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path
+              d="M6 3L11 8L6 13"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );
