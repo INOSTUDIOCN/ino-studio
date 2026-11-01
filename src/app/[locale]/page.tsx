@@ -23,12 +23,14 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         <p className="intro-rise intro-rise-2 mt-6 max-w-md text-balance text-ink-soft">
           {t("subtitle")}
         </p>
-        <Link
-          href="/connexion"
-          className="cta-scan intro-rise intro-rise-3 mt-10 px-8 py-3.5 font-display text-sm font-semibold text-ink transition-transform duration-200 hover:scale-[1.03]"
-        >
-          {tTopbar("login")}
-        </Link>
+        <span className="cta-scan intro-rise intro-rise-3 mt-10">
+          <Link
+            href="/connexion"
+            className="cta-scan-inner px-11 py-5 font-display text-base font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+          >
+            {tTopbar("login")}
+          </Link>
+        </span>
       </div>
     </>
   );
