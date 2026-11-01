@@ -49,5 +49,45 @@
     "title": "Cette page n'existe pas.",
     "subtitle": "Elle a été déplacée ou n'existe plus.",
     "cta": "Retour à l'accueil"
+  },
+  "connexion": {
+    "title": "Se connecter",
+    "subtitle": "Accédez à votre espace client.",
+    "email": "Email",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion en cours",
+    "error": "Email ou mot de passe incorrect."
+  },
+  "espaceClient": {
+    "title": "Espace client",
+    "subtitle": "Suivez l'avancement de vos projets, vos fichiers et vos contrats.",
+    "logout": "Se déconnecter",
+    "empty": "Aucun projet pour le moment.",
+    "steps": "Étapes",
+    "stepStatus": {
+      "pending": "À venir",
+      "in_progress": "En cours",
+      "awaiting_client": "À valider",
+      "done": "Validée"
+    },
+    "validate": "Valider cette étape",
+    "validating": "Validation en cours",
+    "files": "Fichiers",
+    "download": "Télécharger",
+    "noFiles": "Aucun fichier pour le moment.",
+    "contracts": "Contrats",
+    "noContracts": "Aucun contrat pour le moment.",
+    "contractType": {
+      "discussion": "Contrat de discussion",
+      "precontract": "Pré contrat",
+      "signature": "Contrat à signer"
+    },
+    "contractStatus": {
+      "draft": "En préparation",
+      "sent": "En attente de votre action",
+      "completed": "Terminé"
+    },
+    "openContract": "Ouvrir"
   }
 }

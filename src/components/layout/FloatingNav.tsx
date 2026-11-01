@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { ClientSpaceLink } from "@/components/layout/ClientSpaceLink";
 
 export function FloatingNav() {
   const t = useTranslations("nav");
@@ -26,6 +28,9 @@ export function FloatingNav() {
             {link.label}
           </Link>
         ))}
+        <Suspense fallback={null}>
+          <ClientSpaceLink />
+        </Suspense>
       </GlassPanel>
     </nav>
   );

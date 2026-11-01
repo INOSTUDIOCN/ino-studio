@@ -49,5 +49,45 @@
     "title": "此页面不存在。",
     "subtitle": "该页面已被移动或已不存在。",
     "cta": "返回首页"
+  },
+  "connexion": {
+    "title": "登录",
+    "subtitle": "访问您的客户空间。",
+    "email": "邮箱",
+    "password": "密码",
+    "submit": "登录",
+    "submitting": "正在登录",
+    "error": "邮箱或密码不正确。"
+  },
+  "espaceClient": {
+    "title": "客户空间",
+    "subtitle": "查看您的项目进度、文件与合同。",
+    "logout": "退出登录",
+    "empty": "目前没有任何项目。",
+    "steps": "项目步骤",
+    "stepStatus": {
+      "pending": "待开始",
+      "in_progress": "进行中",
+      "awaiting_client": "待确认",
+      "done": "已确认"
+    },
+    "validate": "确认此步骤",
+    "validating": "正在确认",
+    "files": "文件",
+    "download": "下载",
+    "noFiles": "目前没有任何文件。",
+    "contracts": "合同",
+    "noContracts": "目前没有任何合同。",
+    "contractType": {
+      "discussion": "讨论合同",
+      "precontract": "预合同",
+      "signature": "签署合同"
+    },
+    "contractStatus": {
+      "draft": "准备中",
+      "sent": "等待您的操作",
+      "completed": "已完成"
+    },
+    "openContract": "打开"
   }
 }

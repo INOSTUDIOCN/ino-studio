@@ -20,7 +20,7 @@ export async function submitDevisRequest(
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase
       .from("devis_requests")
       .insert({ name, email, service, message });
