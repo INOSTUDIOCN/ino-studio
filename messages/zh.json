@@ -17,7 +17,6 @@
     "subtitle": "网站、Discord 服务器与定制应用开发。"
   },
   "services": {
-    "eyebrow": "服务",
     "title": "网站、Discord 服务器、应用程序。",
     "items": {
       "web": { "title": "网站" },

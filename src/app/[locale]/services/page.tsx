@@ -21,11 +21,7 @@ export default async function Services({ params }: PageProps<"/[locale]/services
     <>
       <BreathingBackground variant="services" />
       <div className="mx-auto flex min-h-screen max-w-4xl flex-col items-center justify-center px-4 pt-16 pb-20 text-center">
-        <p className="intro-rise intro-rise-1 text-sm font-medium uppercase tracking-[0.2em] text-ink-soft">
-          <span className="eyebrow-dot" aria-hidden="true" />
-          <RevealText text={t("eyebrow")} />
-        </p>
-        <h1 className="font-display mt-4 text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+        <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t("title")} stagger={35} />
         </h1>
 

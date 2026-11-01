@@ -17,7 +17,6 @@
     "subtitle": "Sites web, serveurs Discord et applications sur mesure."
   },
   "services": {
-    "eyebrow": "Services",
     "title": "Sites web, serveurs Discord, applications.",
     "items": {
       "web": { "title": "Sites web" },
