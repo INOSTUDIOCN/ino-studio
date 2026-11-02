@@ -141,6 +141,9 @@
     "editorBold": "加粗",
     "editorBulletList": "列表",
     "editorChecklist": "可勾选项",
+    "editorImportToggle": "导入文本",
+    "editorImportPlaceholder": "在此粘贴 markdown 格式的文本（例如 Claude 生成的内容），然后点击转换。## 表示标题，**文字** 表示加粗，- 表示列表，- [ ] 表示可勾选项。\n\n## 1. 当事方\n服务方为 **Ino Studio**。\n\n## 2. 可勾选项\n- [ ] 额外项目\n- [ ] 上线后跟进",
+    "editorImportConvert": "转换",
     "send": "发送给客户"
   },
   "contratPage": {

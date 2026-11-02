@@ -132,6 +132,9 @@ export default async function AdminClient({
               bold: t("editorBold"),
               bulletList: t("editorBulletList"),
               checklist: t("editorChecklist"),
+              importToggle: t("editorImportToggle"),
+              importPlaceholder: t("editorImportPlaceholder"),
+              importConvert: t("editorImportConvert"),
             }}
           />
 
