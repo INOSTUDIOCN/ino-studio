@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
@@ -50,7 +51,15 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
     <>
       <BreathingBackground variant="home" layer="front" cardSelector=".contrat-card" />
       <div className="mx-auto max-w-4xl px-4 pt-16 pb-20 text-center">
-        <h1 className="relative z-20 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+        <Image
+          src="/logo.png"
+          alt="Ino Studio"
+          width={490}
+          height={125}
+          priority
+          className="relative z-20 mx-auto h-8 w-auto"
+        />
+        <h1 className="relative z-20 mt-6 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t(`${typedContract.type}.title`)} stagger={35} />
         </h1>
 
