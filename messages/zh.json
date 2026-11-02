@@ -62,7 +62,29 @@
     "password": "密码",
     "submit": "登录",
     "submitting": "正在登录",
-    "error": "邮箱或密码不正确。"
+    "error": "邮箱或密码不正确。",
+    "forgotPasswordLink": "忘记密码"
+  },
+  "forgotPassword": {
+    "title": "忘记密码",
+    "subtitle": "请填写您的邮箱，我们会发送一个链接帮您设置新密码。",
+    "email": "邮箱",
+    "submit": "发送链接",
+    "submitting": "正在发送",
+    "success": "如果该邮箱对应一个账户，重置链接已经发送。",
+    "error": "出现问题，请稍后重试。"
+  },
+  "resetPassword": {
+    "title": "设置新密码",
+    "subtitle": "请为您的账户设置一个新密码。",
+    "newPassword": "新密码",
+    "confirmPassword": "确认新密码",
+    "submit": "保存",
+    "submitting": "正在保存",
+    "success": "密码已修改，即将跳转到您的客户空间。",
+    "error": "链接可能已过期，请重新申请一个重置链接。",
+    "tooShort": "密码至少需要8个字符。",
+    "mismatch": "两次输入的密码不一致。"
   },
   "espaceClient": {
     "title": "客户空间",
@@ -183,5 +205,11 @@
     "pdfIp": "IP 地址",
     "redirecting": "即将自动返回合同列表，剩余",
     "backToList": "立即返回我的合同"
+  },
+  "footer": {
+    "legalNotice": "法律声明",
+    "privacyPolicy": "隐私政策",
+    "terms": "销售条款",
+    "copyright": "Ino Studio 版权所有"
   }
 }

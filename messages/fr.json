@@ -62,7 +62,29 @@
     "password": "Mot de passe",
     "submit": "Se connecter",
     "submitting": "Connexion en cours",
-    "error": "Email ou mot de passe incorrect."
+    "error": "Email ou mot de passe incorrect.",
+    "forgotPasswordLink": "Mot de passe oublié"
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié",
+    "subtitle": "Indiquez votre email, nous vous envoyons un lien pour choisir un nouveau mot de passe.",
+    "email": "Email",
+    "submit": "Envoyer le lien",
+    "submitting": "Envoi en cours",
+    "success": "Si un compte existe avec cet email, un lien de réinitialisation vient de lui être envoyé.",
+    "error": "Un problème est survenu, réessayez dans un instant."
+  },
+  "resetPassword": {
+    "title": "Nouveau mot de passe",
+    "subtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "submit": "Enregistrer",
+    "submitting": "Enregistrement en cours",
+    "success": "Votre mot de passe a été changé. Vous allez être redirigé vers votre espace client.",
+    "error": "Le lien a peut être expiré, demandez un nouveau lien de réinitialisation.",
+    "tooShort": "Le mot de passe doit contenir au moins 8 caractères.",
+    "mismatch": "Les deux mots de passe ne correspondent pas."
   },
   "espaceClient": {
     "title": "Espace client",
@@ -183,5 +205,11 @@
     "pdfIp": "Adresse IP",
     "redirecting": "Retour automatique à vos contrats dans",
     "backToList": "Retour à mes contrats maintenant"
+  },
+  "footer": {
+    "legalNotice": "Mentions légales",
+    "privacyPolicy": "Confidentialité",
+    "terms": "CGV",
+    "copyright": "Ino Studio, tous droits réservés"
   }
 }

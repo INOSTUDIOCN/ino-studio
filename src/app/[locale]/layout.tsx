@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { TopBar } from "@/components/layout/TopBar";
 import { FloatingNav } from "@/components/layout/FloatingNav";
+import { Footer } from "@/components/layout/Footer";
 import { HtmlLangSync } from "@/components/layout/HtmlLangSync";
 
 export function generateStaticParams() {
@@ -26,7 +27,10 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <HtmlLangSync locale={locale} />
       <TopBar />
-      <main className="flex-1 pt-28 pb-28">{children}</main>
+      <main className="flex-1 pt-28 pb-28">
+        {children}
+        <Footer />
+      </main>
       <FloatingNav />
     </NextIntlClientProvider>
   );

@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/send";
+import { stepAwaitingValidationEmail } from "@/lib/email/templates";
 
 export async function addStep(locale: string, projectId: string, formData: FormData) {
   const label = String(formData.get("label") ?? "").trim();
@@ -27,6 +29,20 @@ export async function setStepStatus(locale: string, projectId: string, stepId: s
   const admin = createSupabaseAdminClient();
   const { error } = await admin.from("project_steps").update({ status }).eq("id", stepId);
   if (error) throw new Error(error.message);
+
+  if (status === "awaiting_client") {
+    const { data: project } = await admin
+      .from("projects")
+      .select("name, profiles(full_name, email)")
+      .eq("id", projectId)
+      .single();
+    const client = Array.isArray(project?.profiles) ? project?.profiles[0] : project?.profiles;
+    if (project && client) {
+      const { subject, html } = stepAwaitingValidationEmail(client.full_name, project.name);
+      await sendEmail({ to: client.email, subject, html });
+    }
+  }
+
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
 }
 

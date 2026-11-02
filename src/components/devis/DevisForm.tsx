@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { GlassSelect } from "@/components/ui/GlassSelect";
@@ -16,6 +16,12 @@ const fieldClass =
 export function DevisForm() {
   const t = useTranslations("devis.form");
   const [state, formAction, pending] = useActionState(submitDevisRequest, initialState);
+  const loadedAtInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (loadedAtInputRef.current) {
+      loadedAtInputRef.current.value = String(Date.now());
+    }
+  }, []);
 
   if (state.status === "success") {
     return (
@@ -28,6 +34,13 @@ export function DevisForm() {
   return (
     <GlassPanel className="devis-card mx-auto max-w-lg rounded-3xl p-8 text-left">
       <form action={formAction} className="flex flex-col gap-4">
+        <input ref={loadedAtInputRef} type="hidden" name="loadedAt" defaultValue="0" />
+        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+          <label>
+            Company
+            <input type="text" name="company" tabIndex={-1} autoComplete="off" />
+          </label>
+        </div>
         <input
           name="name"
           type="text"

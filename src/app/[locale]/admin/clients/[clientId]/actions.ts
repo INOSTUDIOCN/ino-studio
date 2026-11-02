@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { hasTaskItem, isContentEmpty, type JSONContent } from "@/lib/contract-content";
+import { sendEmail } from "@/lib/email/send";
+import { contractReadyEmail } from "@/lib/email/templates";
 
 export async function createProjectForClient(locale: string, clientId: string, formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
@@ -67,6 +69,13 @@ export async function sendContractForClient(locale: string, clientId: string, co
   const admin = createSupabaseAdminClient();
   const { error } = await admin.from("contracts").update({ status: "sent" }).eq("id", contractId);
   if (error) throw new Error(error.message);
+
+  const { data: client } = await admin.from("profiles").select("full_name, email").eq("id", clientId).single();
+  if (client) {
+    const { subject, html } = contractReadyEmail(client.full_name);
+    await sendEmail({ to: client.email, subject, html });
+  }
+
   revalidatePath(`/${locale}/admin/clients/${clientId}`);
   revalidatePath(`/${locale}/admin/contracts`);
 }

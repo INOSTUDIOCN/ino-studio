@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email/send";
+import { clientAccountCreatedEmail } from "@/lib/email/templates";
 
 export async function createClientAccount(locale: string, formData: FormData) {
   const fullName = String(formData.get("fullName") ?? "").trim();
@@ -30,6 +32,9 @@ export async function createClientAccount(locale: string, formData: FormData) {
     email,
   });
   if (profileError) throw new Error(profileError.message);
+
+  const { subject, html } = clientAccountCreatedEmail(fullName);
+  await sendEmail({ to: email, subject, html });
 
   revalidatePath(`/${locale}/admin`);
 }

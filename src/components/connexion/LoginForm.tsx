@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Link } from "@/i18n/navigation";
 import { login, type LoginFormState } from "@/app/[locale]/connexion/actions";
 
 const initialState: LoginFormState = { status: "idle" };
@@ -37,6 +38,10 @@ export function LoginForm() {
         {state.status === "error" && (
           <p className="text-sm text-ink-soft">{t("error")}</p>
         )}
+
+        <Link href="/mot-de-passe-oublie" className="self-center text-xs font-medium text-ink-soft hover:text-ink">
+          {t("forgotPasswordLink")}
+        </Link>
 
         <span className="cta-scan mt-2 self-center">
           <button
