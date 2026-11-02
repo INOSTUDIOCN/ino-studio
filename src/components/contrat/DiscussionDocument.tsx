@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ContractContent } from "@/components/contrat/ContractContent";
+import { CompletedPanel } from "@/components/contrat/CompletedPanel";
 import { collectTaskItems, type JSONContent } from "@/lib/contract-content";
 
 export function DiscussionDocument({
   submitAction,
   content,
+  redirectHref,
   labels,
 }: {
   submitAction: (selected: string[]) => Promise<{ downloadUrl: string | null }>;
   content: JSONContent;
+  redirectHref: string;
   labels: {
     title: string;
     subtitle: string;
@@ -24,6 +27,8 @@ export function DiscussionDocument({
     submitting: string;
     completed: string;
     downloadPdf: string;
+    redirecting: string;
+    backToList: string;
   };
 }) {
   const [checkedIds, setCheckedIds] = useState<Set<string>>(new Set());
@@ -36,14 +41,14 @@ export function DiscussionDocument({
 
   if (done) {
     return (
-      <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-center">
-        <p className="font-display text-lg font-semibold text-ink">{labels.completed}</p>
-        {downloadUrl && (
-          <a href={downloadUrl} className="mt-4 inline-block text-sm font-medium text-ink underline">
-            {labels.downloadPdf}
-          </a>
-        )}
-      </GlassPanel>
+      <CompletedPanel
+        message={labels.completed}
+        downloadUrl={downloadUrl}
+        downloadLabel={labels.downloadPdf}
+        redirectHref={redirectHref}
+        redirectingLabel={labels.redirecting}
+        backLabel={labels.backToList}
+      />
     );
   }
 

@@ -4,17 +4,12 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { RevealText } from "@/components/ui/RevealText";
-import { DiscussionDocument } from "@/components/contrat/DiscussionDocument";
-import { PrecontractApproval } from "@/components/contrat/PrecontractApproval";
-import { SignaturePad } from "@/components/contrat/SignaturePad";
-import { submitDiscussion, approvePrecontract, signContract } from "./actions";
-import { EMPTY_CONTRACT_CONTENT, type JSONContent } from "@/lib/contract-content";
 
 type ContractRow = {
   id: string;
   type: "discussion" | "precontract" | "signature";
   status: "draft" | "sent" | "completed";
-  fields_schema: { content?: JSONContent } | null;
+  token: string;
   pdf_path: string | null;
   projects: { name: string } | { name: string }[] | null;
 };
@@ -40,7 +35,7 @@ export default async function EspaceClientContrats({
 
   const { data: contracts } = await supabase
     .from("contracts")
-    .select("id, type, status, fields_schema, pdf_path, projects(name)")
+    .select("id, type, status, token, pdf_path, projects(name)")
     .order("created_at", { ascending: true });
 
   const admin = createSupabaseAdminClient();
@@ -54,8 +49,7 @@ export default async function EspaceClientContrats({
         downloadUrl = data?.signedUrl ?? null;
       }
       const project = Array.isArray(contract.projects) ? contract.projects[0] : contract.projects;
-      const content = contract.fields_schema?.content ?? EMPTY_CONTRACT_CONTENT;
-      return { ...contract, downloadUrl, content, projectName: project?.name ?? null };
+      return { ...contract, downloadUrl, projectName: project?.name ?? null };
     })
   );
 
@@ -65,86 +59,43 @@ export default async function EspaceClientContrats({
         <RevealText text={t("contracts")} stagger={35} />
       </h1>
 
-      <div className="mt-12 flex flex-col gap-6">
+      <div className="mt-12 flex flex-col gap-3">
         {resolved.length === 0 && (
           <GlassPanel className="rounded-3xl p-8 text-center text-ink-soft">{t("noContracts")}</GlassPanel>
         )}
 
-        {resolved.map((contract) => (
-          <GlassPanel key={contract.id} className="rounded-3xl p-6">
+        {resolved.map((contract) => {
+          const isActionable = contract.status === "sent";
+          const row = (
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-sm font-semibold text-ink">
                 {t(`contractType.${contract.type}`)}
                 {contract.projectName && <span className="font-normal text-ink-soft"> · {contract.projectName}</span>}
               </span>
-              <span className="text-xs font-medium text-ink-soft">{t(`contractStatus.${contract.status}`)}</span>
+              <span className="text-xs font-medium text-ink-soft">
+                {contract.status === "sent" ? t("openContract") : t(`contractStatus.${contract.status}`)}
+              </span>
             </div>
+          );
 
-            {contract.status === "completed" && contract.downloadUrl && (
-              <a href={contract.downloadUrl} className="mt-3 inline-block text-sm font-medium text-ink underline">
-                {tc("downloadPdf")}
-              </a>
-            )}
+          return (
+            <GlassPanel key={contract.id} className="rounded-3xl p-6">
+              {isActionable ? (
+                <a href={`/contrat/${contract.token}`} className="block transition-opacity duration-200 hover:opacity-70">
+                  {row}
+                </a>
+              ) : (
+                row
+              )}
 
-            {contract.status === "sent" && contract.type === "discussion" && (
-              <div className="mt-4">
-                <DiscussionDocument
-                  submitAction={submitDiscussion.bind(null, locale, contract.id)}
-                  content={contract.content}
-                  labels={{
-                    title: tc("discussion.title"),
-                    subtitle: tc("discussion.subtitle"),
-                    review: tc("discussion.review"),
-                    reviewTitle: tc("discussion.reviewTitle"),
-                    checked: tc("discussion.checked"),
-                    unchecked: tc("discussion.unchecked"),
-                    back: tc("discussion.back"),
-                    submit: tc("discussion.submit"),
-                    submitting: tc("discussion.submitting"),
-                    completed: tc("completed"),
-                    downloadPdf: tc("downloadPdf"),
-                  }}
-                />
-              </div>
-            )}
-
-            {contract.status === "sent" && contract.type === "precontract" && (
-              <div className="mt-4">
-                <PrecontractApproval
-                  approveAction={approvePrecontract.bind(null, locale, contract.id)}
-                  content={contract.content}
-                  labels={{
-                    title: tc("precontract.title"),
-                    subtitle: tc("precontract.subtitle"),
-                    approve: tc("precontract.approve"),
-                    approving: tc("precontract.approving"),
-                    completed: tc("completed"),
-                    downloadPdf: tc("downloadPdf"),
-                  }}
-                />
-              </div>
-            )}
-
-            {contract.status === "sent" && contract.type === "signature" && (
-              <div className="mt-4">
-                <SignaturePad
-                  signAction={signContract.bind(null, locale, contract.id)}
-                  content={contract.content}
-                  labels={{
-                    title: tc("signature.title"),
-                    subtitle: tc("signature.subtitle"),
-                    clear: tc("signature.clear"),
-                    submit: tc("signature.submit"),
-                    submitting: tc("signature.submitting"),
-                    required: tc("signature.required"),
-                    completed: tc("completed"),
-                    downloadPdf: tc("downloadPdf"),
-                  }}
-                />
-              </div>
-            )}
-          </GlassPanel>
-        ))}
+              {contract.status === "completed" && contract.downloadUrl && (
+                <a href={contract.downloadUrl} className="mt-3 inline-block text-sm font-medium text-ink underline">
+                  {tc("downloadPdf")}
+                </a>
+              )}
+            </GlassPanel>
+          );
+        })}
       </div>
     </div>
   );

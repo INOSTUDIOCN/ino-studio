@@ -47,6 +47,8 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
     downloadUrl = data?.signedUrl ?? null;
   }
 
+  const redirectHref = `/${locale}/espace-client/contrats`;
+
   return (
     <>
       <BreathingBackground variant="home" layer="front" cardSelector=".contrat-card" />
@@ -89,6 +91,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
               <DiscussionDocument
                 submitAction={submitDiscussion.bind(null, token)}
                 content={content}
+                redirectHref={redirectHref}
                 labels={{
                   title: t("discussion.title"),
                   subtitle: t("discussion.subtitle"),
@@ -101,6 +104,8 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
                   submitting: t("discussion.submitting"),
                   completed: t("completed"),
                   downloadPdf: t("downloadPdf"),
+                  redirecting: t("redirecting"),
+                  backToList: t("backToList"),
                 }}
               />
             </div>
@@ -111,6 +116,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
               <PrecontractApproval
                 approveAction={approvePrecontract.bind(null, token)}
                 content={content}
+                redirectHref={redirectHref}
                 labels={{
                   title: t("precontract.title"),
                   subtitle: t("precontract.subtitle"),
@@ -118,6 +124,8 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
                   approving: t("precontract.approving"),
                   completed: t("completed"),
                   downloadPdf: t("downloadPdf"),
+                  redirecting: t("redirecting"),
+                  backToList: t("backToList"),
                 }}
               />
             </div>
@@ -128,6 +136,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
               <SignaturePad
                 signAction={signContract.bind(null, token)}
                 content={content}
+                redirectHref={redirectHref}
                 labels={{
                   title: t("signature.title"),
                   subtitle: t("signature.subtitle"),
@@ -137,6 +146,8 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
                   required: t("signature.required"),
                   completed: t("completed"),
                   downloadPdf: t("downloadPdf"),
+                  redirecting: t("redirecting"),
+                  backToList: t("backToList"),
                 }}
               />
             </div>

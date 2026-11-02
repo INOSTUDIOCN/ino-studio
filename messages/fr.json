@@ -180,6 +180,8 @@
     },
     "pdfTitle": "Contrat Ino Studio",
     "pdfSignedAt": "Signé le",
-    "pdfIp": "Adresse IP"
+    "pdfIp": "Adresse IP",
+    "redirecting": "Retour automatique à vos contrats dans",
+    "backToList": "Retour à mes contrats maintenant"
   }
 }
