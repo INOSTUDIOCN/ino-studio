@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
@@ -8,6 +9,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { DiscussionDocument } from "@/components/contrat/DiscussionDocument";
 import { PrecontractApproval } from "@/components/contrat/PrecontractApproval";
 import { SignaturePad } from "@/components/contrat/SignaturePad";
+import { ContratLanguageSwitch } from "@/components/contrat/ContratLanguageSwitch";
 import { submitDiscussion, approvePrecontract, signContract } from "./actions";
 import { EMPTY_CONTRACT_CONTENT, type JSONContent } from "@/lib/contract-content";
 
@@ -37,8 +39,11 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
   }
 
   const typedContract = contract as ContractData;
-  const locale = typedContract.locale === "zh" ? "zh" : "fr";
-  const t = await getTranslations({ locale, namespace: "contratPage" });
+  const contentLocale = typedContract.locale === "zh" ? "zh" : "fr";
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get("INO_LOCALE")?.value;
+  const uiLocale = cookieLocale === "fr" || cookieLocale === "zh" ? cookieLocale : contentLocale;
+  const t = await getTranslations({ locale: uiLocale, namespace: "contratPage" });
   const content = typedContract.fields_schema?.content ?? EMPTY_CONTRACT_CONTENT;
 
   let downloadUrl: string | null = null;
@@ -47,7 +52,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
     downloadUrl = data?.signedUrl ?? null;
   }
 
-  const redirectHref = `/${locale}/espace-client/contrats`;
+  const redirectHref = `/${uiLocale}/espace-client/contrats`;
 
   return (
     <>
@@ -61,6 +66,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
           priority
           className="relative z-20 mx-auto h-8 w-auto"
         />
+        <ContratLanguageSwitch current={uiLocale} />
         <h1 className="relative z-20 mt-6 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t(`${typedContract.type}.title`)} stagger={35} />
         </h1>
