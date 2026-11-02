@@ -70,3 +70,18 @@ export async function sendContractForClient(locale: string, clientId: string, co
   revalidatePath(`/${locale}/admin/clients/${clientId}`);
   revalidatePath(`/${locale}/admin/contracts`);
 }
+
+export async function deleteContractForClient(locale: string, clientId: string, contractId: string) {
+  const admin = createSupabaseAdminClient();
+
+  const { data: contract } = await admin.from("contracts").select("pdf_path").eq("id", contractId).single();
+  if (contract?.pdf_path) {
+    await admin.storage.from("contract-pdfs").remove([contract.pdf_path]);
+  }
+
+  const { error } = await admin.from("contracts").delete().eq("id", contractId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath(`/${locale}/admin/clients/${clientId}`);
+  revalidatePath(`/${locale}/admin/contracts`);
+}

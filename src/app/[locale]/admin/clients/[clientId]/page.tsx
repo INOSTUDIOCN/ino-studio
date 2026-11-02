@@ -4,7 +4,13 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { GlassSelect } from "@/components/ui/GlassSelect";
 import { ContractEditor } from "@/components/admin/ContractEditorLoader";
-import { createProjectForClient, createContractForClient, sendContractForClient } from "./actions";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+import {
+  createProjectForClient,
+  createContractForClient,
+  sendContractForClient,
+  deleteContractForClient,
+} from "./actions";
 
 type ProjectRow = { id: string; name: string; status: string };
 type ContractRow = { id: string; type: string; status: string; token: string; locale: string; project_id: string | null };
@@ -72,16 +78,23 @@ export default async function AdminClient({
                 </span>
                 <span className="text-xs font-medium text-ink-soft">{t(`contractStatus.${contract.status}`)}</span>
               </div>
-              {contract.status === "draft" && (
-                <form action={sendContractForClient.bind(null, locale, clientId, contract.id)} className="mt-2">
-                  <button
-                    type="submit"
-                    className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
-                  >
-                    {t("send")}
-                  </button>
-                </form>
-              )}
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                {contract.status === "draft" && (
+                  <form action={sendContractForClient.bind(null, locale, clientId, contract.id)}>
+                    <button
+                      type="submit"
+                      className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+                    >
+                      {t("send")}
+                    </button>
+                  </form>
+                )}
+                <DeleteButton
+                  action={deleteContractForClient.bind(null, locale, clientId, contract.id)}
+                  label={t("delete")}
+                  confirmMessage={t("deleteConfirm")}
+                />
+              </div>
               {contract.status !== "draft" && (
                 <p className="mt-2 break-all text-xs text-ink-soft">
                   {siteUrl}/contrat/{contract.token}

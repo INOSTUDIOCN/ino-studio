@@ -1,7 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { sendContract } from "./actions";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+import { sendContract, deleteContract } from "./actions";
 
 type ContractRow = {
   id: string;
@@ -46,16 +47,23 @@ export default async function AdminContracts({ params }: PageProps<"/[locale]/ad
                 </Link>
                 <span className="text-xs font-medium text-ink-soft">{t(`contractStatus.${contract.status}`)}</span>
               </div>
-              {contract.status === "draft" && (
-                <form action={sendContract.bind(null, locale, contract.id)} className="mt-2">
-                  <button
-                    type="submit"
-                    className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
-                  >
-                    {t("send")}
-                  </button>
-                </form>
-              )}
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                {contract.status === "draft" && (
+                  <form action={sendContract.bind(null, locale, contract.id)}>
+                    <button
+                      type="submit"
+                      className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
+                    >
+                      {t("send")}
+                    </button>
+                  </form>
+                )}
+                <DeleteButton
+                  action={deleteContract.bind(null, locale, contract.id)}
+                  label={t("delete")}
+                  confirmMessage={t("deleteConfirm")}
+                />
+              </div>
               {contract.status !== "draft" && (
                 <p className="mt-2 break-all text-xs text-ink-soft">
                   {siteUrl}/contrat/{contract.token}

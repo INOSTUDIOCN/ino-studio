@@ -144,7 +144,9 @@
     "editorImportToggle": "Importer du texte",
     "editorImportPlaceholder": "Colle ici un texte au format markdown (par exemple généré par Claude) et clique sur Convertir. ## pour un titre, **mot** pour du gras, - pour une liste, - [ ] pour une case à cocher.\n\n## 1. Parties\nLe prestataire est **Ino Studio**.\n\n## 2. Options a cocher\n- [ ] Projets supplementaires\n- [ ] Suivi et maintenance",
     "editorImportConvert": "Convertir",
-    "send": "Envoyer au client"
+    "send": "Envoyer au client",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer définitivement ce contrat ? Cette action est irréversible."
   },
   "contratPage": {
     "notFound": "Ce contrat n'existe pas ou n'est plus disponible.",
