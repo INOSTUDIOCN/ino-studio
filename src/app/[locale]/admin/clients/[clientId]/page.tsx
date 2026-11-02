@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { GlassSelect } from "@/components/ui/GlassSelect";
-import { ContractEditor } from "@/components/admin/ContractEditor";
+import { ContractEditor } from "@/components/admin/ContractEditorLoader";
 import { createProjectForClient, createContractForClient, sendContractForClient } from "./actions";
 
 type ProjectRow = { id: string; name: string; status: string };
