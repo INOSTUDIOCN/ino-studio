@@ -28,7 +28,7 @@ export default async function LocaleLayout({
       <HtmlLangSync locale={locale} />
       <TopBar />
       <main className="flex-1 pt-28 pb-28">
-        {children}
+        <div className="min-h-[calc(100vh-14rem)]">{children}</div>
         <Footer />
       </main>
       <FloatingNav />
