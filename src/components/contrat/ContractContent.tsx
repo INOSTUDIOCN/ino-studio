@@ -99,7 +99,7 @@ export function ContractContent({
           >
             <input
               type="checkbox"
-              className="mt-0.5"
+              className="mt-0.5 accent-ink"
               checked={checked}
               disabled={!onToggle}
               onChange={(event) => onToggle?.(id, event.target.checked)}

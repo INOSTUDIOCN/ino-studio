@@ -1,4 +1,5 @@
 import path from "node:path";
+import fs from "node:fs";
 import { Document, Page, Text, View, Image, Font, StyleSheet, renderToBuffer } from "@react-pdf/renderer";
 import type { JSONContent } from "@/lib/contract-content";
 
@@ -10,17 +11,29 @@ Font.register({
 const styles = StyleSheet.create({
   page: { padding: 48, fontSize: 11, lineHeight: 1.6 },
   pageZh: { fontFamily: "Noto Sans SC" },
+  logo: { width: 130, height: 33, marginBottom: 20, objectFit: "contain" },
   title: { fontSize: 18, fontWeight: 700, marginBottom: 16 },
   heading: { fontSize: 13, fontWeight: 700, marginTop: 14, marginBottom: 4 },
   paragraph: { marginTop: 4 },
   bold: { fontWeight: 700 },
   listItem: { marginTop: 2, marginLeft: 12 },
-  taskItem: { marginTop: 4, flexDirection: "row" },
-  taskMark: { width: 16 },
+  taskItem: { marginTop: 6, flexDirection: "row", alignItems: "flex-start" },
+  checkbox: {
+    width: 10,
+    height: 10,
+    marginTop: 2,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: "#121212",
+  },
+  checkboxChecked: { backgroundColor: "#121212" },
+  taskLabel: { flex: 1 },
   signatureBlock: { marginTop: 32, borderTop: 1, borderColor: "#cccccc", paddingTop: 16 },
   signatureImage: { width: 200, height: 80, objectFit: "contain" },
   meta: { marginTop: 8, fontSize: 9, color: "#555555" },
 });
+
+const LOGO_BUFFER = fs.readFileSync(path.join(process.cwd(), "public/logo.png"));
 
 function textFrom(node: JSONContent): string {
   if (node.type === "text") return node.text ?? "";
@@ -64,8 +77,8 @@ function renderNodes(nodes: JSONContent[] | undefined, checkedLabels?: Set<strin
           const checked = checkedLabels ? checkedLabels.has(label) : Boolean(item.attrs?.checked);
           return (
             <View key={`${i}-${j}`} style={styles.taskItem}>
-              <Text style={styles.taskMark}>{checked ? "☑" : "☐"}</Text>
-              <Text>{label}</Text>
+              <View style={checked ? [styles.checkbox, styles.checkboxChecked] : styles.checkbox} />
+              <Text style={styles.taskLabel}>{label}</Text>
             </View>
           );
         });
@@ -95,6 +108,8 @@ function ContractDocument({ title, content, checkedLabels, locale, signature }: 
   return (
     <Document>
       <Page size="A4" style={pageStyle}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text -- @react-pdf/renderer's Image, not an HTML img */}
+        <Image src={LOGO_BUFFER} style={styles.logo} />
         <Text style={styles.title}>{title}</Text>
         {renderNodes(content.content, checkedSet)}
 

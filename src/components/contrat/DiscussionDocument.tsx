@@ -113,10 +113,7 @@ export function DiscussionDocument({
 
   return (
     <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-left">
-      <h2 className="font-display text-lg font-semibold text-ink">{labels.title}</h2>
-      <p className="mt-2 text-sm text-ink-soft">{labels.subtitle}</p>
-
-      <div className="mt-6">
+      <div>
         <ContractContent
           doc={content}
           checkedIds={checkedIds}

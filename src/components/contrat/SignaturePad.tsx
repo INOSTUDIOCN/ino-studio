@@ -93,10 +93,7 @@ export function SignaturePad({
 
   return (
     <GlassPanel className="mx-auto max-w-2xl rounded-3xl p-8 text-left">
-      <h2 className="font-display text-lg font-semibold text-ink">{labels.title}</h2>
-      <p className="mt-2 text-sm text-ink-soft">{labels.subtitle}</p>
-
-      <div className="mt-6 max-h-96 overflow-y-auto rounded-2xl border border-ink/10 bg-paper/60 px-4 py-4">
+      <div className="max-h-96 overflow-y-auto rounded-2xl border border-ink/10 bg-paper/60 px-4 py-4">
         <ContractContent doc={content} />
       </div>
 
