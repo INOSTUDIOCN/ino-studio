@@ -8,13 +8,13 @@ export default async function Cgv({ params }: PageProps<"/[locale]/cgv">) {
     return (
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-20 text-left">
         <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">一般销售条款</h1>
-        <p className="mt-2 text-sm text-ink-soft">最后更新 [日期]</p>
+        <p className="mt-2 text-sm text-ink-soft">最后更新 2026年11月23日</p>
 
         <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
           <section>
             <h2 className="font-display text-lg font-semibold text-ink">1. 适用范围</h2>
             <p className="mt-2">
-              本条款适用于 Ino Studio（[姓名/公司名称]）与客户之间签订的所有网站、Discord 服务器及定制应用开发服务合同，
+              本条款适用于 INO 与客户之间签订的所有网站、Discord 服务器及定制应用开发服务合同，
               不论客户是否为专业人士。
             </p>
           </section>
@@ -82,15 +82,15 @@ export default async function Cgv({ params }: PageProps<"/[locale]/cgv">) {
       <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
         Conditions générales de vente
       </h1>
-      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le [date]</p>
+      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le 23 novembre 2026</p>
 
       <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
         <section>
           <h2 className="font-display text-lg font-semibold text-ink">1. Champ d&apos;application</h2>
           <p className="mt-2">
             Les présentes conditions s&apos;appliquent à tout contrat de création de site web, de serveur Discord
-            ou d&apos;application sur mesure conclu entre Ino Studio ([Nom et prénom / raison sociale]) et un
-            client, qu&apos;il s&apos;agisse d&apos;un professionnel ou d&apos;un particulier.
+            ou d&apos;application sur mesure conclu entre INO et un client, qu&apos;il s&apos;agisse d&apos;un
+            professionnel ou d&apos;un particulier.
           </p>
         </section>
 

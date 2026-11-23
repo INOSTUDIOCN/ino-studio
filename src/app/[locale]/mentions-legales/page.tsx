@@ -8,16 +8,15 @@ export default async function MentionsLegales({ params }: PageProps<"/[locale]/m
     return (
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-20 text-left">
         <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">法律声明</h1>
-        <p className="mt-2 text-sm text-ink-soft">最后更新 [日期]</p>
+        <p className="mt-2 text-sm text-ink-soft">最后更新 2026年11月23日</p>
 
         <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
           <section>
             <h2 className="font-display text-lg font-semibold text-ink">1. 网站发布者</h2>
             <p className="mt-2">
-              本网站由 Ino Studio 发布，经营者为 [姓名/公司名称]，法律形式为 [法律形式，例如个体经营者]，
-              注册地址为 [地址]，[如适用，注册号]。
+              本网站由 INO 发布，该公司注册地址位于卢森堡市，卢森堡。
             </p>
-            <p className="mt-2">联系邮箱为 [联系邮箱]</p>
+            <p className="mt-2">联系邮箱为 ilyinhoff@gmail.com</p>
           </section>
 
           <section>
@@ -55,17 +54,15 @@ export default async function MentionsLegales({ params }: PageProps<"/[locale]/m
   return (
     <div className="mx-auto max-w-2xl px-4 pt-16 pb-20 text-left">
       <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">Mentions légales</h1>
-      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le [date]</p>
+      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le 23 novembre 2026</p>
 
       <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
         <section>
           <h2 className="font-display text-lg font-semibold text-ink">1. Éditeur du site</h2>
           <p className="mt-2">
-            Le présent site est édité par Ino Studio, exploité par [Nom et prénom / raison sociale], [statut
-            juridique, par exemple entrepreneur individuel], domicilié(e) au [adresse], [le cas échéant, numéro
-            d&apos;immatriculation RCS].
+            Le présent site est édité par INO, société domiciliée à Luxembourg, Luxembourg.
           </p>
-          <p className="mt-2">L&apos;adresse de contact est [email de contact]</p>
+          <p className="mt-2">L&apos;adresse de contact est ilyinhoff@gmail.com</p>
         </section>
 
         <section>

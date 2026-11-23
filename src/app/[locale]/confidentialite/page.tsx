@@ -8,14 +8,14 @@ export default async function Confidentialite({ params }: PageProps<"/[locale]/c
     return (
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-20 text-left">
         <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">隐私政策</h1>
-        <p className="mt-2 text-sm text-ink-soft">最后更新 [日期]</p>
+        <p className="mt-2 text-sm text-ink-soft">最后更新 2026年11月23日</p>
 
         <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
           <section>
             <h2 className="font-display text-lg font-semibold text-ink">1. 数据处理负责人</h2>
             <p className="mt-2">
-              Ino Studio（[姓名/公司名称]，[地址]）是本网站收集的个人数据的处理负责人。如有任何问题，请联系
-              [联系邮箱]。
+              INO（注册地址位于卢森堡市，卢森堡）是本网站收集的个人数据的处理负责人。如有任何问题，请联系
+              ilyinhoff@gmail.com。
             </p>
           </section>
 
@@ -57,7 +57,7 @@ export default async function Confidentialite({ params }: PageProps<"/[locale]/c
             <h2 className="font-display text-lg font-semibold text-ink">6. 您的权利</h2>
             <p className="mt-2">
               根据《通用数据保护条例》，您有权访问、更正、删除您的数据，有权限制或反对处理，也有权获得数据可携带性。
-              如需行使这些权利，请发送邮件至 [联系邮箱]。您也有权向卢森堡国家数据保护委员会（CNPD）提出投诉。
+              如需行使这些权利，请发送邮件至 ilyinhoff@gmail.com。您也有权向卢森堡国家数据保护委员会（CNPD）提出投诉。
             </p>
           </section>
 
@@ -83,15 +83,14 @@ export default async function Confidentialite({ params }: PageProps<"/[locale]/c
   return (
     <div className="mx-auto max-w-2xl px-4 pt-16 pb-20 text-left">
       <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">Politique de confidentialité</h1>
-      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le [date]</p>
+      <p className="mt-2 text-sm text-ink-soft">Dernière mise à jour le 23 novembre 2026</p>
 
       <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
         <section>
           <h2 className="font-display text-lg font-semibold text-ink">1. Responsable du traitement</h2>
           <p className="mt-2">
-            Ino Studio, exploité par [Nom et prénom / raison sociale], domicilié(e) au [adresse], est responsable
-            du traitement des données personnelles collectées sur ce site. Pour toute question, vous pouvez
-            écrire à [email de contact].
+            INO, société domiciliée à Luxembourg, Luxembourg, est responsable du traitement des données
+            personnelles collectées sur ce site. Pour toute question, vous pouvez écrire à ilyinhoff@gmail.com.
           </p>
         </section>
 
@@ -142,7 +141,7 @@ export default async function Confidentialite({ params }: PageProps<"/[locale]/c
             Conformément au Règlement général sur la protection des données, vous disposez d&apos;un droit
             d&apos;accès, de rectification, d&apos;effacement, de limitation et d&apos;opposition au traitement,
             ainsi que d&apos;un droit à la portabilité de vos données. Pour exercer ces droits, vous pouvez écrire
-            à [email de contact]. Vous disposez également du droit d&apos;introduire une réclamation auprès de la
+            à ilyinhoff@gmail.com. Vous disposez également du droit d&apos;introduire une réclamation auprès de la
             Commission nationale pour la protection des données (CNPD) du Luxembourg.
           </p>
         </section>
