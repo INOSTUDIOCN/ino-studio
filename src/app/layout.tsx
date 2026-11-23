@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
@@ -35,9 +35,26 @@ const generalSans = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://inostudio.cloud"),
   title: "Ino Studio",
   description:
     "Ino Studio, sites web, serveurs Discord et applications sur mesure.",
+  openGraph: {
+    title: "Ino Studio",
+    description:
+      "Ino Studio, sites web, serveurs Discord et applications sur mesure.",
+    siteName: "Ino Studio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ino Studio",
+    description:
+      "Ino Studio, sites web, serveurs Discord et applications sur mesure.",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#121212",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
