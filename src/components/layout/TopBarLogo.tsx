@@ -17,7 +17,7 @@ export async function TopBarLogo() {
 
   return (
     <Link href={href} aria-label={t("homeAria")} className="flex items-center">
-      <Image src="/logo.png" alt="Ino Studio" width={490} height={125} priority className="h-7 w-auto" />
+      <Image src="/logo.png" alt="Ino Studio" width={490} height={125} priority className="h-6 w-auto sm:h-7" />
     </Link>
   );
 }

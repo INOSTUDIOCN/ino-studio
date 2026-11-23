@@ -3,6 +3,8 @@ import { RevealText } from "@/components/ui/RevealText";
 import { ForgotPasswordForm } from "@/components/connexion/ForgotPasswordForm";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 
+export const instant = false;
+
 export default async function MotDePasseOublie({
   params,
 }: PageProps<"/[locale]/mot-de-passe-oublie">) {

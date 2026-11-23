@@ -12,7 +12,7 @@ export async function TopBarAuthButton() {
     return (
       <Link
         href="/connexion"
-        className="rounded-full border border-ink/10 bg-paper/70 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-paper"
+        className="whitespace-nowrap rounded-full border border-ink/10 bg-paper/70 px-3 py-1.5 text-xs font-medium text-ink transition-colors duration-200 hover:bg-paper sm:px-4 sm:py-2 sm:text-sm"
       >
         {t("login")}
       </Link>
@@ -23,7 +23,7 @@ export async function TopBarAuthButton() {
     <form action={logout.bind(null, locale)}>
       <button
         type="submit"
-        className="rounded-full border border-ink/10 bg-paper/70 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-paper"
+        className="whitespace-nowrap rounded-full border border-ink/10 bg-paper/70 px-3 py-1.5 text-xs font-medium text-ink transition-colors duration-200 hover:bg-paper sm:px-4 sm:py-2 sm:text-sm"
       >
         {t("logout")}
       </button>

@@ -31,7 +31,7 @@ export function LanguageSwitch() {
     <div
       role="group"
       aria-label={t("languageSwitchAria")}
-      className="flex items-center gap-0.5 rounded-full border border-ink/10 bg-paper/60 p-1 text-sm"
+      className="flex items-center gap-0.5 rounded-full border border-ink/10 bg-paper/60 p-1 text-xs sm:text-sm"
     >
       {routing.locales.map((code) => (
         <button
@@ -40,7 +40,7 @@ export function LanguageSwitch() {
           onClick={(event) => handleSelect(code, event)}
           aria-pressed={locale === code}
           className={cn(
-            "rounded-full px-3 py-1.5 font-medium transition-colors duration-200",
+            "whitespace-nowrap rounded-full px-2 py-1 font-medium transition-colors duration-200 sm:px-3 sm:py-1.5",
             locale === code
               ? "bg-ink text-paper"
               : "text-ink-soft hover:text-ink"

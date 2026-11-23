@@ -3,6 +3,8 @@ import { RevealText } from "@/components/ui/RevealText";
 import { DevisForm } from "@/components/devis/DevisForm";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 
+export const instant = false;
+
 export default async function Devis({ params }: PageProps<"/[locale]/devis">) {
   const { locale } = await params;
   setRequestLocale(locale);

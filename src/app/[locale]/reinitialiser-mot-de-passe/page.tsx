@@ -3,6 +3,8 @@ import { RevealText } from "@/components/ui/RevealText";
 import { ResetPasswordForm } from "@/components/connexion/ResetPasswordForm";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 
+export const instant = false;
+
 export default async function ReinitialiserMotDePasse({
   params,
 }: PageProps<"/[locale]/reinitialiser-mot-de-passe">) {

@@ -3,6 +3,8 @@ import { RevealText } from "@/components/ui/RevealText";
 import { LoginForm } from "@/components/connexion/LoginForm";
 import { BreathingBackground } from "@/components/background/BreathingBackground";
 
+export const instant = false;
+
 export default async function Connexion({ params }: PageProps<"/[locale]/connexion">) {
   const { locale } = await params;
   setRequestLocale(locale);
