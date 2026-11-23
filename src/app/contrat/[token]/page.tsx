@@ -71,7 +71,7 @@ export default async function Contrat({ params }: { params: Promise<{ token: str
           <RevealText text={t(`${typedContract.type}.title`)} stagger={35} />
         </h1>
 
-        <div className="mt-14">
+        <div className="relative z-20 mt-14">
           {typedContract.status === "draft" && (
             <GlassPanel className="contrat-card mx-auto max-w-lg rounded-3xl p-8 text-center">
               <p className="text-ink-soft">{t("draft")}</p>
