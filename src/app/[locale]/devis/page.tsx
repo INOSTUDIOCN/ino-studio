@@ -21,7 +21,7 @@ export default async function Devis({ params }: PageProps<"/[locale]/devis">) {
           {t("subtitle")}
         </p>
 
-        <div className="intro-rise intro-rise-3 mt-14">
+        <div className="intro-rise intro-rise-3 relative z-20 mt-14">
           <DevisForm />
         </div>
       </div>

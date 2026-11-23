@@ -20,7 +20,7 @@ export default async function Connexion({ params }: PageProps<"/[locale]/connexi
         <p className="intro-rise intro-rise-2 relative z-20 mx-auto mt-5 max-w-xl text-balance text-ink-soft">
           {t("subtitle")}
         </p>
-        <div className="intro-rise intro-rise-3 mt-14">
+        <div className="intro-rise intro-rise-3 relative z-20 mt-14">
           <LoginForm />
         </div>
       </div>

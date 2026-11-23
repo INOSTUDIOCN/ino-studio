@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { Mesh, Program, Renderer, Triangle, Vec2, Vec3 } from "ogl";
 import { vertex, fragment } from "@/components/background/breathingShader";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 type Blob = {
   target: { x: number; y: number };
@@ -66,6 +67,7 @@ export function BreathingBackground({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const hasFinePointer = useMediaQuery("(pointer: fine)");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -120,6 +122,7 @@ export function BreathingBackground({
       const { clientWidth, clientHeight } = container!;
       renderer.setSize(clientWidth, clientHeight);
       program.uniforms.uResolution.value.set(clientWidth, clientHeight);
+      refreshCardRect();
     }
     resize();
     window.addEventListener("resize", resize);
@@ -157,14 +160,26 @@ export function BreathingBackground({
 
     let elapsed = 0;
     let dilutedValue = 0;
+    let cachedCard: Element | null = null;
+    let cachedRect: DOMRect | null = null;
+    let rectFrameCounter = 0;
+    const RECT_REFRESH_INTERVAL = 6;
+
+    function refreshCardRect() {
+      if (!cardSelector) return;
+      if (!cachedCard) {
+        cachedCard = document.querySelector(cardSelector);
+      }
+      if (cachedCard) {
+        cachedRect = cachedCard.getBoundingClientRect();
+      }
+    }
 
     function computeTargetDilution() {
-      if (!cardSelector) return 0;
-      const card = document.querySelector(cardSelector);
-      if (!card) return 0;
+      if (!cardSelector || !cachedRect) return 0;
 
       const { clientWidth, clientHeight } = container!;
-      const rect = card.getBoundingClientRect();
+      const rect = cachedRect;
       const primary = blobs[0];
       const blobX = primary.pos.x * clientWidth;
       const blobY = (1 - primary.pos.y) * clientHeight;
@@ -221,6 +236,10 @@ export function BreathingBackground({
         });
 
         if (cardSelector) {
+          if (rectFrameCounter % RECT_REFRESH_INTERVAL === 0) {
+            refreshCardRect();
+          }
+          rectFrameCounter++;
           const targetDilution = computeTargetDilution();
           dilutedValue += (targetDilution - dilutedValue) * 0.1;
           program.uniforms.uDiluted.value = dilutedValue;
@@ -253,7 +272,9 @@ export function BreathingBackground({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       container?.removeChild(gl.canvas);
     };
-  }, [variant, reducedMotion, layer, cardSelector]);
+  }, [variant, reducedMotion, layer, cardSelector, hasFinePointer]);
+
+  if (!hasFinePointer) return null;
 
   return (
     <div

@@ -501,7 +501,7 @@ html::-webkit-scrollbar {
 
 @media (max-width: 640px) {
   .card-carousel-stage {
-    height: 210px;
+    height: 170px;
   }
 
   .card-carousel-card {
@@ -517,6 +517,35 @@ html::-webkit-scrollbar {
   .card-carousel-card--left {
     transform: translateX(-130px) translateZ(-170px) rotateY(28deg) scale(0.78);
     opacity: 0.45;
+  }
+
+  /* Allege le cout de rendu du verre liquide sur mobile (moins de flou, pas
+     d'animation de reflet ni de filtre SVG en continu derriere un fond anime). */
+  .glass-panel {
+    -webkit-backdrop-filter: blur(10px) saturate(170%);
+    backdrop-filter: blur(10px) saturate(170%);
+  }
+
+  .glass-panel::before {
+    animation: none;
+  }
+
+  .glass-panel::after {
+    filter: none;
+  }
+
+  .card-carousel-arrow {
+    -webkit-backdrop-filter: blur(8px) saturate(170%);
+    backdrop-filter: blur(8px) saturate(170%);
+  }
+
+  .card-carousel-arrow::before {
+    animation: none;
+  }
+
+  .cta-scan-inner {
+    -webkit-backdrop-filter: blur(8px) saturate(160%);
+    backdrop-filter: blur(8px) saturate(160%);
   }
 }
 

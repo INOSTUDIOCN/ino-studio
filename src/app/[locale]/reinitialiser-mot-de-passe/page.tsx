@@ -22,7 +22,7 @@ export default async function ReinitialiserMotDePasse({
         <p className="intro-rise intro-rise-2 relative z-20 mx-auto mt-5 max-w-xl text-balance text-ink-soft">
           {t("subtitle")}
         </p>
-        <div className="intro-rise intro-rise-3 mt-14">
+        <div className="intro-rise intro-rise-3 relative z-20 mt-14">
           <ResetPasswordForm />
         </div>
       </div>

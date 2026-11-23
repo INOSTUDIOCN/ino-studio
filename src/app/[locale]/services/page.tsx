@@ -20,18 +20,18 @@ export default async function Services({ params }: PageProps<"/[locale]/services
   return (
     <>
       <BreathingBackground variant="services" />
-      <div className="mx-auto max-w-4xl px-4 pt-16 pb-20 text-center">
+      <div className="mx-auto max-w-4xl px-4 pt-10 pb-20 text-center sm:pt-16">
         <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
           <RevealText text={t("title")} stagger={35} />
         </h1>
 
-        <div className="intro-rise intro-rise-3 mt-16 w-full">
+        <div className="intro-rise intro-rise-3 mt-8 w-full sm:mt-16">
           <CardCarousel3D>
             {ITEMS.map(({ key, icons }, i) => (
               <GlassPanel
                 key={key}
                 tilt
-                className="relative flex h-full flex-col items-center justify-center gap-4 rounded-3xl p-8 text-center"
+                className="relative flex h-full flex-col items-center justify-center gap-2 rounded-3xl p-5 text-center sm:gap-4 sm:p-8"
               >
                 <span className="ghost-numeral">{String(i + 1).padStart(2, "0")}</span>
                 <div className="flex items-center gap-4 text-ink">
@@ -47,7 +47,7 @@ export default async function Services({ params }: PageProps<"/[locale]/services
           </CardCarousel3D>
         </div>
 
-        <span className="cta-scan intro-rise intro-rise-3 mt-16">
+        <span className="cta-scan intro-rise intro-rise-3 mt-8 sm:mt-16">
           <Link
             href="/devis"
             className="cta-scan-inner px-9 py-4 font-display text-sm font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
