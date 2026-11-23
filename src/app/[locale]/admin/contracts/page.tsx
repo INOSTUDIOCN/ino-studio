@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { ActionForm } from "@/components/admin/ActionForm";
 import { sendContract, deleteContract } from "./actions";
 
 type ContractRow = {
@@ -49,19 +50,23 @@ export default async function AdminContracts({ params }: PageProps<"/[locale]/ad
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 {contract.status === "draft" && (
-                  <form action={sendContract.bind(null, locale, contract.id)}>
+                  <ActionForm
+                    action={sendContract.bind(null, locale, contract.id)}
+                    successMessage={t("toasts.contractSent")}
+                  >
                     <button
                       type="submit"
                       className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
                     >
                       {t("send")}
                     </button>
-                  </form>
+                  </ActionForm>
                 )}
                 <DeleteButton
                   action={deleteContract.bind(null, locale, contract.id)}
                   label={t("delete")}
                   confirmMessage={t("deleteConfirm")}
+                  successMessage={t("toasts.contractDeleted")}
                 />
               </div>
               {contract.status !== "draft" && (

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { ActionForm } from "@/components/admin/ActionForm";
 import { addStep, setStepStatus, uploadFile } from "./actions";
 
 type StepRow = { id: string; label: string; position: number; status: string };
@@ -86,7 +87,11 @@ export default async function AdminProject({
               <span className="text-sm text-ink">{step.label}</span>
               <div className="flex gap-2">
                 {STEP_STATUSES.map((status) => (
-                  <form key={status} action={setStepStatus.bind(null, locale, projectId, step.id, status)}>
+                  <ActionForm
+                    key={status}
+                    action={setStepStatus.bind(null, locale, projectId, step.id, status)}
+                    successMessage={t("toasts.stepStatusUpdated")}
+                  >
                     <button
                       type="submit"
                       className={`rounded-full px-3 py-1 text-xs font-medium transition-colors duration-200 ${
@@ -97,13 +102,17 @@ export default async function AdminProject({
                     >
                       {t(`stepStatus.${status}`)}
                     </button>
-                  </form>
+                  </ActionForm>
                 ))}
               </div>
             </li>
           ))}
         </ul>
-        <form action={addStep.bind(null, locale, projectId)} className="mt-4 flex gap-3">
+        <ActionForm
+          action={addStep.bind(null, locale, projectId)}
+          successMessage={t("toasts.stepAdded")}
+          className="mt-4 flex gap-3"
+        >
           <input name="label" placeholder={t("stepLabel")} required className={fieldClass} />
           <button
             type="submit"
@@ -111,7 +120,7 @@ export default async function AdminProject({
           >
             {t("create")}
           </button>
-        </form>
+        </ActionForm>
       </GlassPanel>
 
       <GlassPanel className="mt-8 rounded-3xl p-8">
@@ -123,7 +132,11 @@ export default async function AdminProject({
             </li>
           ))}
         </ul>
-        <form action={uploadFile.bind(null, locale, projectId)} className="mt-4 flex gap-3">
+        <ActionForm
+          action={uploadFile.bind(null, locale, projectId)}
+          successMessage={t("toasts.fileUploaded")}
+          className="mt-4 flex gap-3"
+        >
           <input name="file" type="file" required className={fieldClass} />
           <button
             type="submit"
@@ -131,7 +144,7 @@ export default async function AdminProject({
           >
             {t("uploadFile")}
           </button>
-        </form>
+        </ActionForm>
       </GlassPanel>
 
       {contractList.length > 0 && (

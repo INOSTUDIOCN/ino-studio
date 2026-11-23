@@ -168,7 +168,17 @@
     "editorImportConvert": "Convertir",
     "send": "Envoyer au client",
     "delete": "Supprimer",
-    "deleteConfirm": "Supprimer définitivement ce contrat ? Cette action est irréversible."
+    "deleteConfirm": "Supprimer définitivement ce contrat ? Cette action est irréversible.",
+    "toasts": {
+      "clientCreated": "Client créé",
+      "projectCreated": "Projet créé",
+      "contractCreated": "Contrat créé",
+      "contractSent": "Contrat envoyé au client",
+      "contractDeleted": "Contrat supprimé",
+      "stepAdded": "Étape ajoutée",
+      "stepStatusUpdated": "Statut mis à jour",
+      "fileUploaded": "Fichier envoyé"
+    }
   },
   "contratPage": {
     "notFound": "Ce contrat n'existe pas ou n'est plus disponible.",

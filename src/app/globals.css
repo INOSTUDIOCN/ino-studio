@@ -138,6 +138,36 @@ html::-webkit-scrollbar {
   animation: intro-rise var(--duration-slow) var(--ease-glass) both;
 }
 
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+}
+
+.toast-bubble-enter {
+  animation: toast-enter var(--duration-base) var(--ease-liquid-out) both;
+}
+
+.toast-bubble-leave {
+  animation: toast-leave var(--duration-base) var(--ease-glass) both;
+}
+
 .intro-rise-1 {
   animation-delay: 60ms;
 }
@@ -546,6 +576,14 @@ html::-webkit-scrollbar {
   .cta-scan-inner {
     -webkit-backdrop-filter: blur(8px) saturate(160%);
     backdrop-filter: blur(8px) saturate(160%);
+  }
+
+  /* iOS Safari zoome automatiquement au focus sur un champ en dessous de 16px. */
+  input,
+  textarea,
+  select,
+  .contract-editor-content {
+    font-size: 16px;
   }
 }
 

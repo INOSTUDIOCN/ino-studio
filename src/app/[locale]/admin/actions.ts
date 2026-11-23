@@ -4,14 +4,15 @@ import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/send";
 import { clientAccountCreatedEmail } from "@/lib/email/templates";
+import type { ActionResult } from "@/lib/admin/action-result";
 
-export async function createClientAccount(locale: string, formData: FormData) {
+export async function createClientAccount(locale: string, formData: FormData): Promise<ActionResult> {
   const fullName = String(formData.get("fullName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
   if (!fullName || !email || !password) {
-    throw new Error("Champs manquants");
+    return { status: "error", message: "Champs manquants" };
   }
 
   const admin = createSupabaseAdminClient();
@@ -22,7 +23,7 @@ export async function createClientAccount(locale: string, formData: FormData) {
   });
 
   if (error || !data.user) {
-    throw new Error(error?.message ?? "Création du compte impossible");
+    return { status: "error", message: error?.message ?? "Création du compte impossible" };
   }
 
   const { error: profileError } = await admin.from("profiles").insert({
@@ -31,10 +32,11 @@ export async function createClientAccount(locale: string, formData: FormData) {
     full_name: fullName,
     email,
   });
-  if (profileError) throw new Error(profileError.message);
+  if (profileError) return { status: "error", message: profileError.message };
 
   const { subject, html } = clientAccountCreatedEmail(fullName);
   await sendEmail({ to: email, subject, html });
 
   revalidatePath(`/${locale}/admin`);
+  return { status: "success" };
 }

@@ -168,7 +168,17 @@
     "editorImportConvert": "转换",
     "send": "发送给客户",
     "delete": "删除",
-    "deleteConfirm": "确定要永久删除此合同吗？此操作无法撤销。"
+    "deleteConfirm": "确定要永久删除此合同吗？此操作无法撤销。",
+    "toasts": {
+      "clientCreated": "客户已创建",
+      "projectCreated": "项目已创建",
+      "contractCreated": "合同已创建",
+      "contractSent": "合同已发送给客户",
+      "contractDeleted": "合同已删除",
+      "stepAdded": "步骤已添加",
+      "stepStatusUpdated": "状态已更新",
+      "fileUploaded": "文件已上传"
+    }
   },
   "contratPage": {
     "notFound": "该合同不存在或已失效。",

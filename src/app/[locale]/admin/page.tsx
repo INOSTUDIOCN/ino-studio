@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { ActionForm } from "@/components/admin/ActionForm";
 import { createClientAccount } from "./actions";
 
 type ProfileRow = { id: string; full_name: string; email: string; role: string };
@@ -33,7 +34,11 @@ export default async function Admin({ params }: PageProps<"/[locale]/admin">) {
 
       <GlassPanel className="mt-10 rounded-3xl p-8">
         <h2 className="font-display text-lg font-semibold text-ink">{t("newClient")}</h2>
-        <form action={createClientAccount.bind(null, locale)} className="mt-4 flex flex-col gap-3 sm:max-w-md">
+        <ActionForm
+          action={createClientAccount.bind(null, locale)}
+          successMessage={t("toasts.clientCreated")}
+          className="mt-4 flex flex-col gap-3 sm:max-w-md"
+        >
           <input name="fullName" placeholder={t("fullName")} required className={fieldClass} />
           <input name="email" type="email" placeholder={t("email")} required className={fieldClass} />
           <input name="password" type="password" placeholder={t("password")} required className={fieldClass} />
@@ -43,7 +48,7 @@ export default async function Admin({ params }: PageProps<"/[locale]/admin">) {
           >
             {t("create")}
           </button>
-        </form>
+        </ActionForm>
       </GlassPanel>
 
       <div className="mt-10">

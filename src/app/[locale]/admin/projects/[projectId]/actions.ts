@@ -4,10 +4,11 @@ import { revalidatePath } from "next/cache";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email/send";
 import { stepAwaitingValidationEmail } from "@/lib/email/templates";
+import type { ActionResult } from "@/lib/admin/action-result";
 
-export async function addStep(locale: string, projectId: string, formData: FormData) {
+export async function addStep(locale: string, projectId: string, formData: FormData): Promise<ActionResult> {
   const label = String(formData.get("label") ?? "").trim();
-  if (!label) throw new Error("Champ manquant");
+  if (!label) return { status: "error", message: "Champ manquant" };
 
   const admin = createSupabaseAdminClient();
   const { count } = await admin
@@ -20,15 +21,21 @@ export async function addStep(locale: string, projectId: string, formData: FormD
     label,
     position: count ?? 0,
   });
-  if (error) throw new Error(error.message);
+  if (error) return { status: "error", message: error.message };
 
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
+  return { status: "success" };
 }
 
-export async function setStepStatus(locale: string, projectId: string, stepId: string, status: string) {
+export async function setStepStatus(
+  locale: string,
+  projectId: string,
+  stepId: string,
+  status: string
+): Promise<ActionResult> {
   const admin = createSupabaseAdminClient();
   const { error } = await admin.from("project_steps").update({ status }).eq("id", stepId);
-  if (error) throw new Error(error.message);
+  if (error) return { status: "error", message: error.message };
 
   if (status === "awaiting_client") {
     const { data: project } = await admin
@@ -44,12 +51,13 @@ export async function setStepStatus(locale: string, projectId: string, stepId: s
   }
 
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
+  return { status: "success" };
 }
 
-export async function uploadFile(locale: string, projectId: string, formData: FormData) {
+export async function uploadFile(locale: string, projectId: string, formData: FormData): Promise<ActionResult> {
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
-    throw new Error("Fichier manquant");
+    return { status: "error", message: "Fichier manquant" };
   }
 
   const admin = createSupabaseAdminClient();
@@ -60,7 +68,7 @@ export async function uploadFile(locale: string, projectId: string, formData: Fo
     .upload(storagePath, file, { contentType: file.type });
 
   if (uploadError) {
-    throw new Error(uploadError.message);
+    return { status: "error", message: uploadError.message };
   }
 
   const { error: insertError } = await admin.from("project_files").insert({
@@ -68,7 +76,8 @@ export async function uploadFile(locale: string, projectId: string, formData: Fo
     name: file.name,
     storage_path: storagePath,
   });
-  if (insertError) throw new Error(insertError.message);
+  if (insertError) return { status: "error", message: insertError.message };
 
   revalidatePath(`/${locale}/admin/projects/${projectId}`);
+  return { status: "success" };
 }

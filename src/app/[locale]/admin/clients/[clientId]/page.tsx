@@ -5,6 +5,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { GlassSelect } from "@/components/ui/GlassSelect";
 import { ContractEditor } from "@/components/admin/ContractEditorLoader";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { ActionForm } from "@/components/admin/ActionForm";
 import {
   createProjectForClient,
   createContractForClient,
@@ -80,19 +81,23 @@ export default async function AdminClient({
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 {contract.status === "draft" && (
-                  <form action={sendContractForClient.bind(null, locale, clientId, contract.id)}>
+                  <ActionForm
+                    action={sendContractForClient.bind(null, locale, clientId, contract.id)}
+                    successMessage={t("toasts.contractSent")}
+                  >
                     <button
                       type="submit"
                       className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper transition-transform duration-200 hover:scale-[1.03]"
                     >
                       {t("send")}
                     </button>
-                  </form>
+                  </ActionForm>
                 )}
                 <DeleteButton
                   action={deleteContractForClient.bind(null, locale, clientId, contract.id)}
                   label={t("delete")}
                   confirmMessage={t("deleteConfirm")}
+                  successMessage={t("toasts.contractDeleted")}
                 />
               </div>
               {contract.status !== "draft" && (
@@ -104,8 +109,9 @@ export default async function AdminClient({
           ))}
         </ul>
 
-        <form
+        <ActionForm
           action={createContractForClient.bind(null, locale, clientId)}
+          successMessage={t("toasts.contractCreated")}
           className="mt-6 flex flex-col gap-3"
         >
           <div className="grid gap-3 sm:grid-cols-2">
@@ -157,7 +163,7 @@ export default async function AdminClient({
           >
             {t("create")}
           </button>
-        </form>
+        </ActionForm>
       </GlassPanel>
 
       <GlassPanel className="mt-8 rounded-3xl p-8">
@@ -175,7 +181,11 @@ export default async function AdminClient({
             </li>
           ))}
         </ul>
-        <form action={createProjectForClient.bind(null, locale, clientId)} className="mt-4 flex gap-3">
+        <ActionForm
+          action={createProjectForClient.bind(null, locale, clientId)}
+          successMessage={t("toasts.projectCreated")}
+          className="mt-4 flex gap-3"
+        >
           <input name="name" placeholder={t("projectName")} required className={fieldClass} />
           <button
             type="submit"
@@ -183,7 +193,7 @@ export default async function AdminClient({
           >
             {t("create")}
           </button>
-        </form>
+        </ActionForm>
       </GlassPanel>
     </div>
   );
