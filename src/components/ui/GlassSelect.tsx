@@ -13,6 +13,7 @@ export function GlassSelect({
   required,
   className,
   defaultValue,
+  onChange,
 }: {
   name: string;
   options: Option[];
@@ -20,6 +21,7 @@ export function GlassSelect({
   required?: boolean;
   className?: string;
   defaultValue?: string;
+  onChange?: (value: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(defaultValue ?? "");
@@ -96,6 +98,7 @@ export function GlassSelect({
               onClick={() => {
                 setSelected(option.value);
                 setOpen(false);
+                onChange?.(option.value);
               }}
               className={cn(
                 "w-full rounded-xl px-3 py-2 text-left text-sm transition-colors duration-150",

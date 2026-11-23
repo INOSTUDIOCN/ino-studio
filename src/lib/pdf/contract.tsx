@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
   checkboxChecked: { backgroundColor: "#121212" },
   taskLabel: { flex: 1 },
   signatureBlock: { marginTop: 32, borderTop: 1, borderColor: "#cccccc", paddingTop: 16 },
-  signatureImage: { width: 200, height: 80, objectFit: "contain" },
+  signatureRow: { flexDirection: "row", justifyContent: "space-between" },
+  signatureColumn: { width: "45%" },
+  signatureImage: { width: 160, height: 64, objectFit: "contain" },
   meta: { marginTop: 8, fontSize: 9, color: "#555555" },
 });
 
@@ -98,6 +100,8 @@ type ContractPdfProps = {
     signatureDataUrl: string;
     signedAtLabel: string;
     ipAddress: string;
+    studioLabel?: string;
+    studioSignatureDataUrl?: string;
   };
 };
 
@@ -115,9 +119,20 @@ function ContractDocument({ title, content, checkedLabels, locale, signature }: 
 
         {signature && (
           <View style={styles.signatureBlock}>
-            <Text>{signature.clientName}</Text>
-            {/* eslint-disable-next-line jsx-a11y/alt-text -- @react-pdf/renderer's Image, not an HTML img */}
-            <Image src={signature.signatureDataUrl} style={styles.signatureImage} />
+            <View style={styles.signatureRow}>
+              {signature.studioSignatureDataUrl && (
+                <View style={styles.signatureColumn}>
+                  <Text>{signature.studioLabel}</Text>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text -- @react-pdf/renderer's Image, not an HTML img */}
+                  <Image src={signature.studioSignatureDataUrl} style={styles.signatureImage} />
+                </View>
+              )}
+              <View style={styles.signatureColumn}>
+                <Text>{signature.clientName}</Text>
+                {/* eslint-disable-next-line jsx-a11y/alt-text -- @react-pdf/renderer's Image, not an HTML img */}
+                <Image src={signature.signatureDataUrl} style={styles.signatureImage} />
+              </View>
+            </View>
             <Text style={styles.meta}>{signature.signedAtLabel}</Text>
             <Text style={styles.meta}>{signature.ipAddress}</Text>
           </View>

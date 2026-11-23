@@ -148,6 +148,8 @@
     "selectContractLocale": "Langue du contrat",
     "selectProjectOptional": "Lier à un projet (facultatif)",
     "manageContractsOnClient": "Gérer les contrats depuis la fiche client",
+    "adminSignatureLabel": "Ta signature (obligatoire pour un contrat à signer)",
+    "adminSignatureClear": "Effacer",
     "contractType": {
       "discussion": "Contrat de discussion",
       "precontract": "Pré contrat",
@@ -213,6 +215,7 @@
     "pdfTitle": "Contrat Ino Studio",
     "pdfSignedAt": "Signé le",
     "pdfIp": "Adresse IP",
+    "pdfStudioLabel": "Ino Studio",
     "redirecting": "Retour automatique à vos contrats dans",
     "backToList": "Retour à mes contrats maintenant"
   },

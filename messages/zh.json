@@ -148,6 +148,8 @@
     "selectContractLocale": "合同语言",
     "selectProjectOptional": "关联项目（可选）",
     "manageContractsOnClient": "在客户详情页管理合同",
+    "adminSignatureLabel": "你的签名（签署合同必填）",
+    "adminSignatureClear": "清除",
     "contractType": {
       "discussion": "讨论合同",
       "precontract": "预合同",
@@ -213,6 +215,7 @@
     "pdfTitle": "Ino Studio 合同",
     "pdfSignedAt": "签署时间",
     "pdfIp": "IP 地址",
+    "pdfStudioLabel": "Ino Studio",
     "redirecting": "即将自动返回合同列表，剩余",
     "backToList": "立即返回我的合同"
   },

@@ -88,7 +88,7 @@ export async function signContract(token: string, signatureDataUrl: string) {
   const admin = createSupabaseAdminClient();
   const { data: contract } = await admin
     .from("contracts")
-    .select("id, status, type, locale, fields_schema, profiles(full_name)")
+    .select("id, status, type, locale, fields_schema, admin_signature_data, profiles(full_name)")
     .eq("token", token)
     .single();
 
@@ -117,6 +117,8 @@ export async function signContract(token: string, signatureDataUrl: string) {
       signatureDataUrl,
       signedAtLabel: `${t("pdfSignedAt")} ${signedAt.toLocaleString(contractLocale === "zh" ? "zh-CN" : "fr-FR")}`,
       ipAddress: `${t("pdfIp")} ${ipAddress}`,
+      studioLabel: t("pdfStudioLabel"),
+      studioSignatureDataUrl: contract.admin_signature_data ?? undefined,
     },
   });
 

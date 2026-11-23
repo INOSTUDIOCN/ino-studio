@@ -6,6 +6,7 @@ import { GlassSelect } from "@/components/ui/GlassSelect";
 import { ContractEditor } from "@/components/admin/ContractEditorLoader";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 import { ActionForm } from "@/components/admin/ActionForm";
+import { ContractTypeAndSignature } from "@/components/admin/ContractTypeAndSignature";
 import {
   createProjectForClient,
   createContractForClient,
@@ -114,27 +115,22 @@ export default async function AdminClient({
           successMessage={t("toasts.contractCreated")}
           className="mt-6 flex flex-col gap-3"
         >
-          <div className="grid gap-3 sm:grid-cols-2">
-            <GlassSelect
-              name="type"
-              placeholder={t("selectContractType")}
-              required
-              options={[
-                { value: "discussion", label: t("contractType.discussion") },
-                { value: "precontract", label: t("contractType.precontract") },
-                { value: "signature", label: t("contractType.signature") },
-              ]}
-            />
-            <GlassSelect
-              name="contractLocale"
-              placeholder={t("selectContractLocale")}
-              defaultValue="fr"
-              options={[
-                { value: "fr", label: "Français" },
-                { value: "zh", label: "中文" },
-              ]}
-            />
-          </div>
+          <ContractTypeAndSignature
+            typeOptions={[
+              { value: "discussion", label: t("contractType.discussion") },
+              { value: "precontract", label: t("contractType.precontract") },
+              { value: "signature", label: t("contractType.signature") },
+            ]}
+            typePlaceholder={t("selectContractType")}
+            localeOptions={[
+              { value: "fr", label: "Français" },
+              { value: "zh", label: "中文" },
+            ]}
+            localePlaceholder={t("selectContractLocale")}
+            localeDefaultValue="fr"
+            signatureLabel={t("adminSignatureLabel")}
+            signatureClearLabel={t("adminSignatureClear")}
+          />
           {projectList.length > 0 && (
             <GlassSelect
               name="projectId"

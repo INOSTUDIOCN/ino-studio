@@ -33,9 +33,14 @@ export async function createContractForClient(
   const contractLocale = String(formData.get("contractLocale") ?? "fr");
   const projectId = String(formData.get("projectId") ?? "") || null;
   const rawContent = String(formData.get("content") ?? "");
+  const adminSignatureData = String(formData.get("adminSignature") ?? "");
 
   if (!["discussion", "precontract", "signature"].includes(type)) {
     return { status: "error", message: "Type de contrat invalide" };
+  }
+
+  if (type === "signature" && !adminSignatureData.startsWith("data:image")) {
+    return { status: "error", message: "Signe le contrat avant de le créer." };
   }
 
   let content: JSONContent;
@@ -68,6 +73,7 @@ export async function createContractForClient(
     type,
     locale: contractLocale,
     fields_schema: { content },
+    admin_signature_data: type === "signature" ? adminSignatureData : null,
   });
   if (error) return { status: "error", message: error.message };
 
