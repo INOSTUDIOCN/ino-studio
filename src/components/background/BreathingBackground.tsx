@@ -118,6 +118,21 @@ export function BreathingBackground({
     }));
     const uniformKeys = ["uBlobA", "uBlobB", "uBlobC"] as const;
 
+    let cachedCard: Element | null = null;
+    let cachedRect: DOMRect | null = null;
+    let rectFrameCounter = 0;
+    const RECT_REFRESH_INTERVAL = 6;
+
+    function refreshCardRect() {
+      if (!cardSelector) return;
+      if (!cachedCard) {
+        cachedCard = document.querySelector(cardSelector);
+      }
+      if (cachedCard) {
+        cachedRect = cachedCard.getBoundingClientRect();
+      }
+    }
+
     function resize() {
       const { clientWidth, clientHeight } = container!;
       renderer.setSize(clientWidth, clientHeight);
@@ -160,20 +175,6 @@ export function BreathingBackground({
 
     let elapsed = 0;
     let dilutedValue = 0;
-    let cachedCard: Element | null = null;
-    let cachedRect: DOMRect | null = null;
-    let rectFrameCounter = 0;
-    const RECT_REFRESH_INTERVAL = 6;
-
-    function refreshCardRect() {
-      if (!cardSelector) return;
-      if (!cachedCard) {
-        cachedCard = document.querySelector(cardSelector);
-      }
-      if (cachedCard) {
-        cachedRect = cachedCard.getBoundingClientRect();
-      }
-    }
 
     function computeTargetDilution() {
       if (!cardSelector || !cachedRect) return 0;
